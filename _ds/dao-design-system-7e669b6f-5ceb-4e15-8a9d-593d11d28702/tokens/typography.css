@@ -1,0 +1,40 @@
+/* Dao type. Two families only. Serif for display and headings, Inter for body,
+   small text and data. Serif tracking tightens as size grows; Inter is never tracked. */
+:root{
+  --font-display:"Season Mix","Petrona",Georgia,serif;
+  --font-serif:var(--font-display);
+  --font-body:"Inter",system-ui,sans-serif;
+
+  --weight-display:300; /* @kind font */ /* Light */
+  --weight-serif:400; /* @kind font */
+  --weight-body:400; /* @kind font */
+  --weight-body-medium:500; /* @kind font */
+
+  /* scale */
+  --size-display-xl:96px;
+  --size-display:64px;
+  --size-display-sm:56px;
+  --size-h2:40px;
+  --size-h3:32px;
+  --size-h4:24px;
+  --size-subhead:20px;
+  --size-body:16px;
+  --size-data:13px;
+  --size-small:12px;
+  --size-micro:10px;
+
+  /* line heights */
+  --lh-display:0.98; /* @kind other */
+  --lh-heading:1.1; /* @kind other */
+  --lh-subhead:1.3; /* @kind other */
+  --lh-body:1.55; /* @kind other */
+  --lh-small:1.45; /* @kind other */
+
+  /* tracking. Serif only. */
+  --track-display:-.02em; /* @kind other */ /* 56px and up */
+  --track-heading:-.01em; /* @kind other */ /* 24 to 56 */
+  --track-none:0; /* @kind other */
+  --track-micro:.22em; /* @kind other */ /* Inter micro metadata, corners and footers only */
+
+  --measure:65ch; /* @kind other */ /* running text stays near 65 characters */
+}

@@ -1,0 +1,23 @@
+/* Dao paper. The supplied limewash photograph, laid over the page ground. It is a
+   real wall surface, not procedural noise: soft trowel movement with fine tooth in
+   it, and that is why it is never stretched. Pinned at its native 1400px
+   width so the trowel movement and the tooth stay at true scale, and repeated
+   rather than stretched. At the 1440 artboard that is roughly 1:1; the seam every
+   905px is invisible at these opacities on a surface this low in contrast.
+   Light ground: the layer multiplies, so the paper darkens where the wall does.
+   Dark ground: the same wall read as a dimly lit surface, so it screens at very
+   low opacity and the tooth shows as faint highlight instead of grey wash.
+   Apply with .dao-paper on the ground element, or use the tokens directly. */
+:root{
+  --grain-opacity:.45; /* @kind other */
+  --grain-opacity-dark:.13; /* @kind other */
+  --grain-image:url("../assets/texture-limewash.png"); /* @kind other */
+  --grain-size:1400px auto; /* @kind other */
+  --grain-repeat:repeat; /* @kind other */
+  --grain-blend:multiply; /* @kind other */
+  --grain-blend-dark:screen; /* @kind other */
+}
+.dao-paper{position:relative;background:var(--ground)}
+.dao-paper::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:var(--grain-image);background-size:var(--grain-size);background-position:top center;background-repeat:var(--grain-repeat);mix-blend-mode:var(--grain-blend);opacity:var(--grain-opacity);z-index:0}
+[data-theme="dark"] .dao-paper::after,.dao-paper[data-theme="dark"]::after{mix-blend-mode:var(--grain-blend-dark);opacity:var(--grain-opacity-dark)}
+.dao-paper>*{position:relative;z-index:1}

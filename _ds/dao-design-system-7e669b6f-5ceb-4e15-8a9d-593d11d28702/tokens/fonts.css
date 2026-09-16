@@ -1,0 +1,9 @@
+/* Dao webfonts.
+   Display: Season Mix, the licensed brand face. Trial files, supplied as OTF.
+   Body, small text and data: Inter. Petrona stays in the stack behind Season Mix
+   as a graceful fallback only; it is no longer the rendered face.
+   Note: no italic file was supplied, so the italic accent style is synthesised. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Petrona:ital,wght@0,300;0,400;1,300&display=swap");
+@font-face{font-family:"Season Mix";src:url("../assets/fonts/SeasonMixTRIAL-Light.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Season Mix";src:url("../assets/fonts/SeasonMixTRIAL-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Season Mix";src:url("../assets/fonts/SeasonMixTRIAL-Medium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap}

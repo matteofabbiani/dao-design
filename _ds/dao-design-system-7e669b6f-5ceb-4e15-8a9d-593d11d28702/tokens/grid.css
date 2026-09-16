@@ -1,0 +1,21 @@
+/* Dao grid. 12 columns, 24px gutter, 64px outer offset at a 1440 artboard.
+   Column origin  x(i) = 64 + i * 111.333
+   Span width     w(n) = n * 87.333 + (n - 1) * 24
+   4 cols = 421, 5 = 533, 6 = 644, 8 = 867, 12 = 1312.
+   Text snaps to spans; most copy sits on 4 to 7 columns and nothing runs the full 12.
+   Photography may float free of the grid. One deliberate grid break per page, an
+   image rather than type. */
+:root{
+  --grid-columns:12; /* @kind other */
+  --grid-gutter:24px;
+  --grid-offset:64px;
+  --grid-artboard:1440px;
+  --grid-column:87.333px;
+  --grid-content:1312px;
+  --span-4:421px;
+  --span-5:533px;
+  --span-6:644px;
+  --span-8:867px;
+  --span-12:1312px;
+}
+.dao-grid{display:grid;grid-template-columns:repeat(var(--grid-columns),minmax(0,1fr));gap:0 var(--grid-gutter);padding-inline:var(--grid-offset);max-width:var(--grid-artboard);margin-inline:auto}

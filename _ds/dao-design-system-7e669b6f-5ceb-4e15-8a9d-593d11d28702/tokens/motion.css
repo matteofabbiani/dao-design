@@ -1,0 +1,18 @@
+/* Dao motion. Slow throughout, the expo-out family of curves, nothing springs or
+   bounces. Durations ladder by role. Nothing lifts or translates upward on hover. */
+:root{
+  --ease-out:cubic-bezier(.16,1,.3,1); /* @kind other */
+  --ease-in-out:cubic-bezier(.87,0,.13,1); /* @kind other */
+
+  --dur-hover:.75s; /* @kind other */
+  --dur-chrome:1s; /* @kind other */
+  --dur-content:1.25s; /* @kind other */
+  --dur-mask:2s; /* @kind other */
+  --dur-image:3s; /* @kind other */
+
+  --stagger-char:.012s; /* @kind other */ /* band: .005 to .02 */
+  --stagger-element:.06s; /* @kind other */ /* band: .035 to .1 */
+
+  --parallax-travel:12%; /* @kind other */ /* in-frame drift, 10 to 15% of frame height */
+  --panel-recede:.94; /* @kind other */ /* outgoing section scales back to this */
+}

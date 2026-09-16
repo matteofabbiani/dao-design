@@ -1,0 +1,13 @@
+/* Minimal element defaults so a consumer page inherits the voice without classes. */
+body{background:var(--ground);color:var(--text-body);font-family:var(--font-body);font-size:var(--size-body);line-height:var(--lh-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:var(--weight-display);color:var(--text-display);margin:0}
+h1{font-size:var(--size-display);line-height:var(--lh-display);letter-spacing:var(--track-display)}
+h2{font-size:var(--size-h2);line-height:var(--lh-heading);letter-spacing:var(--track-heading)}
+h3{font-size:var(--size-h3);line-height:var(--lh-heading);letter-spacing:var(--track-heading)}
+h4{font-size:var(--size-h4);line-height:var(--lh-subhead);letter-spacing:var(--track-heading)}
+p{margin:0;max-width:var(--measure);text-wrap:pretty}
+a{color:var(--text-body);text-decoration:none;border-bottom:var(--hairline) solid var(--rule);transition:border-color var(--dur-hover) var(--ease-out),color var(--dur-hover) var(--ease-out)}
+a:hover{color:var(--text-body);border-bottom-color:var(--ink)}
+.dao-num{font-variant-numeric:tabular-nums}
+.dao-rule{border:0;border-top:var(--hairline) solid var(--rule);margin:0}
+.dao-meta{font-family:var(--font-body);font-weight:var(--weight-body-medium);font-size:var(--size-micro);letter-spacing:var(--track-micro);text-transform:uppercase;color:var(--text-meta)}

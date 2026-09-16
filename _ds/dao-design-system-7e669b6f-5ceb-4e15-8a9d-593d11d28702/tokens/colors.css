@@ -1,0 +1,50 @@
+/* Dao colour. Two grounds, warm in both directions. No accent colour anywhere.
+   Colour enters a page only through photography. Hierarchy is carried by scale,
+   weight, whitespace and hairline rules. */
+:root{
+  /* base grounds */
+  --paper:#F7F4EC;          /* warm limewash paper */
+  --charcoal:#1C1A17;       /* warm charcoal, brown in it, never neutral grey */
+  --ink-warm:#1A1815;       /* warm near-black, never #000 */
+  --cream:#EDE8DC;          /* ink on dark ground */
+
+  /* light theme (default) */
+  --ground:var(--paper);
+  --ink:var(--ink-warm);
+  --ink-2:rgba(26,24,21,.70);
+  --ink-3:rgba(26,24,21,.45);
+  --rule:rgba(26,24,21,.16);
+  --rule-faint:rgba(26,24,21,.08);
+  --panel:rgba(26,24,21,.035);
+
+  /* semantic aliases */
+  --surface-page:var(--ground);
+  --surface-panel:var(--panel);
+  --text-display:var(--ink);
+  --text-body:var(--ink);
+  --text-secondary:var(--ink-2);
+  --text-meta:var(--ink-3);
+  --border-hairline:var(--rule);
+  --border-faint:var(--rule-faint);
+
+  /* over-photography ink. Type on image is always full-opacity cream. */
+  --ink-on-image:#F7F4EC;
+  --meta-on-image:rgba(247,244,236,.60);
+  --rule-on-image:rgba(247,244,236,.80);
+
+  /* scrims. Two layers, never one: a flat floor plus a band that protects the
+     middle of the frame while top and bottom of the photograph stay open. */
+  --scrim-floor:rgba(0,0,0,.38); /* @kind color */
+  --scrim-band:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.30) 30%,rgba(0,0,0,.34) 80%,transparent 100%); /* @kind color */
+}
+
+/* dark ground. Narrative, not a user toggle: the site walks day into night. */
+[data-theme="dark"]{
+  --ground:var(--charcoal);
+  --ink:var(--cream);
+  --ink-2:rgba(237,232,220,.70);
+  --ink-3:rgba(237,232,220,.45);
+  --rule:rgba(237,232,220,.18);
+  --rule-faint:rgba(237,232,220,.09);
+  --panel:rgba(237,232,220,.04);
+}

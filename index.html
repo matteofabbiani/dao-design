@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/tokens/fonts.css">
+  <link rel="stylesheet" href="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/tokens/colors.css">
+  <link rel="stylesheet" href="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/tokens/typography.css">
+  <link rel="stylesheet" href="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/tokens/spacing.css">
+  <link rel="stylesheet" href="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/tokens/grid.css">
+  <link rel="stylesheet" href="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/tokens/texture.css">
+  <link rel="stylesheet" href="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/tokens/motion.css">
+  <link rel="stylesheet" href="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/tokens/base.css">
+  <link rel="stylesheet" href="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/styles.css">
+  <script src="/_ds/dao-design-system-7e669b6f-5ceb-4e15-8a9d-593d11d28702/_ds_bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="/dao-transition.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.11"></script>
+  <style>
+    .dao-paper::after{background-image:url(/assets/grain.webp);background-size:1440px auto;background-attachment:fixed;background-position:center top;mix-blend-mode:multiply;opacity:.55}
+    [data-theme="dark"] .dao-paper::after,.dao-paper[data-theme="dark"]::after{mix-blend-mode:overlay;opacity:.42;filter:grayscale(1)}
+    [data-sheet][data-theme="dark"]{background-color:#15130F !important}
+    .cm-card{transition:clip-path .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1),opacity .3s,background-color 1s cubic-bezier(.16,1,.3,1),color 1s cubic-bezier(.16,1,.3,1);clip-path:inset(50% round 50em);transform:translateY(0%) rotate(.001deg);opacity:0}
+    [data-cursor-marquee-status="active"] .cm-card{clip-path:inset(0 round 50em);transform:translateY(0%) rotate(.001deg);opacity:1}
+    [data-menu-item] img{transition:transform 1.25s cubic-bezier(.16,1,.3,1)}
+    [data-menu-item]:hover img{transform:scale(1.08) !important}
+    [data-footer-page]:hover [data-zoom]{transform:scale(1.08)}
+    [data-footer-page] span[style*='font-display']{transition:color .75s cubic-bezier(.16,1,.3,1)}
+    [data-footer-page]:hover span[style*='font-display']{color:var(--ink)}
+    @keyframes cmTranslate{to{transform:translateX(-100%)}}
+    .cm-text{animation:cmTranslate 10s linear infinite paused;transition:opacity .6s cubic-bezier(.16,1,.3,1),filter .9s cubic-bezier(.16,1,.3,1);opacity:0;filter:blur(6px)}
+    [data-cursor-marquee-status="active"] .cm-text{transition:opacity .9s cubic-bezier(.16,1,.3,1) .15s,filter 1.1s cubic-bezier(.16,1,.3,1) .15s;opacity:1;filter:blur(0px)}
+
+    .fig{font:300 clamp(56px,6.2vw,96px)/.95 var(--font-display);letter-spacing:-.02em;color:var(--ink);margin:0;max-width:none}
+    .fig2{font:300 clamp(40px,4vw,64px)/1 var(--font-display);letter-spacing:-.02em;color:var(--ink);margin:0;max-width:none}
+    .word{font:400 12px/1.5 var(--font-body);color:var(--ink-2);margin:0;max-width:none}
+    .meta{font:500 10px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)}
+    .img{position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;display:block}
+    [data-block]{opacity:0;transform:translateY(18px);filter:blur(8px)}
+    [data-press-slot] [data-press-logo]{position:absolute;left:50%;top:50%}
+    .hr{position:relative}
+    .hr>*{position:relative;z-index:1}
+    .hr .hv{position:absolute;inset:0;z-index:0;pointer-events:none;clip-path:inset(50% 0% 50% 0%);transition:clip-path 1s cubic-bezier(.16,1,.3,1)}
+    .hr:hover .hv{clip-path:inset(0% 0% 0% 0%)}
+    .hr .hv img{position:absolute;inset:-10% 0;width:100%;height:120%;object-fit:cover;display:block;transform:scale(1.08);transition:transform 2s cubic-bezier(.16,1,.3,1),opacity 1.5s cubic-bezier(.16,1,.3,1),filter 1.5s cubic-bezier(.16,1,.3,1);opacity:.35;filter:blur(6px)}
+    .hr:hover .hv img{transform:scale(1);opacity:.6;filter:blur(0)}
+    .hr .hv .sc{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+    .hr .meta,.hr .word{transition:color 1s cubic-bezier(.16,1,.3,1)}
+    .hr:hover .meta,.hr:hover .word{color:#EDE8DC}
+
+    /* container principle: every section grid is 12 columns inside a 1440 max, centred; type measures cap in ch so they stop growing on wide screens */
+    [data-container]{max-width:1440px;margin-left:auto;margin-right:auto}
+    @media (max-width: 820px){
+      /* menu on a phone: a list, name large, number first, a small frame at the right, each row a full-width tap */
+      [data-menu-panel]{left:16px !important;right:16px !important;top:64px !important;padding:0 20px !important}
+      [data-menu-panel] > div:first-child{display:flex !important;flex-direction:column !important;gap:0 !important;padding:16px 0 8px !important;overflow:auto;align-items:stretch !important}
+      [data-menu-item]{flex-direction:row !important;align-items:center !important;justify-content:space-between !important;gap:16px !important;padding:14px 0 !important;border-top:1px solid rgba(237,232,220,.18) !important;min-height:72px}
+      [data-menu-item]:first-child{border-top:0 !important}
+      [data-menu-mask]{width:44px !important;flex:0 0 44px;order:2}
+      [data-menu-label]{flex-direction:row !important;justify-content:flex-start !important;gap:14px !important;align-items:baseline !important}
+      [data-menu-label] > .dao-num{order:0 !important}
+      [data-menu-label] > span:last-child{font-size:30px !important}
+      [data-menu-contact]{flex-direction:column;gap:8px !important;padding:16px 0 20px !important;font-size:13px !important}
+      /* touch targets */
+      .ch{padding:10px 0 !important;min-height:44px}
+      .lt-host{min-height:44px}
+      [data-nav-menu],[data-nav-left]{padding:10px 0 !important;margin-top:4px !important}
+      [data-nav]{padding:14px 20px !important}
+      [data-footer-strip] a{min-height:44px}
+      [data-fit]{letter-spacing:-.03em !important}
+      .fq{min-height:56px}
+      [data-press-wall]{width:100% !important;gap:16px !important}
+      [data-press-slot]{height:40px !important}
+    }
+    [data-measure="s"]{max-width:38ch !important}
+    [data-measure="m"]{max-width:52ch !important}
+    [data-measure="l"]{max-width:64ch !important}
+
+    /* mobile layer, one breakpoint: sections collapse to one column, offsets go to 24, the trail runs vertically */
+    @media (max-width: 820px){
+      [data-container]{grid-template-columns:minmax(0,1fr) !important;padding-left:24px !important;padding-right:24px !important}
+      [data-container] > *{grid-column:1 / -1 !important;justify-self:stretch !important;max-width:none !important;margin-left:0 !important;margin-right:0 !important}
+      [data-container] figure{margin-top:0 !important}
+      [data-screen-label="Paragraph"]{padding-top:120px !important;padding-bottom:96px !important}
+      [data-screen-label="Duo"]{gap:48px 0 !important;padding-bottom:0 !important}
+      [data-screen-label="The evening"],[data-screen-label="Price and pairing"]{padding-top:120px !important;padding-bottom:120px !important}
+      [data-screen-label="Nir"]{padding-top:96px !important;padding-bottom:140px !important}
+      [data-screen-label="The evening"] [data-mask]{aspect-ratio:4 / 5 !important}
+      [data-screen-label="The evening"] .hr{display:flex !important;flex-direction:column !important;gap:10px !important;padding:24px 0 !important}
+      [data-screen-label="The evening"] .hr .meta{order:1}[data-screen-label="The evening"] .hr .fig2{order:2;font-size:44px !important}[data-screen-label="The evening"] .hr .word{order:3}
+      [data-screen-label="The evening"] .hr .hv{display:none}
+      [data-screen-label="Price and pairing"] > div{gap:48px !important}
+      [data-screen-label="Price and pairing"] > div > div[style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr) !important}
+      [data-press-wall]{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:12px !important;width:100% !important}
+      [data-screen-label="Nir"] [data-mask]{width:100%}
+      [data-hero]{min-height:0 !important;height:100svh !important}
+      [data-hero-title]{font-size:clamp(32px,9vw,44px) !important}
+      [data-hero-corner],[data-screen-label="The shared table"] > span[style*="right:64px"]{right:24px !important}
+      [data-recede]{height:100svh !important;min-height:0 !important}
+      [data-recede] p{font-size:clamp(22px,6vw,28px) !important;width:auto !important}
+      [data-nav]{padding:16px 24px !important}
+
+      [data-screen-label="Reserve and footer"] > div[style*="border-top"]{display:flex !important;flex-direction:column;align-items:flex-start !important;gap:24px !important}
+      [data-screen-label="Reserve and footer"] > div[style*="border-top"] > div{text-align:left !important}
+      [data-menu-panel]{left:24px !important;right:24px !important;top:72px !important;padding:0 20px !important}
+      [data-menu-panel] > div:first-child{grid-template-columns:repeat(2,minmax(0,1fr)) !important;align-items:start !important;padding-bottom:24px !important;overflow:auto}
+      [data-menu-contact]{flex-direction:column;gap:6px !important}
+      [data-trail]{height:auto !important;overflow:visible !important}
+      [data-track]{flex-direction:column !important;width:auto !important;height:auto !important;padding:48px 24px 96px !important;gap:56px !important;align-items:stretch !important;transform:none !important}
+      [data-tmask]{height:auto !important;width:100% !important;align-self:stretch !important;transform:none !important}
+      [data-tmask]:nth-child(even){width:78% !important;align-self:flex-end !important}
+      [data-tmask] img{inset:0 !important;width:100% !important}
+      [data-trail-text]{position:static !important;width:auto !important;min-width:0 !important;max-width:none !important;font-size:clamp(22px,6vw,28px) !important;padding:16px 0}
+      [data-screen-label="Reserve and footer"]{padding-top:120px !important;min-height:0 !important;row-gap:56px !important}
+      [data-screen-label="Reserve and footer"] [data-footer-strip]{grid-template-columns:repeat(2,minmax(0,1fr)) !important;margin-bottom:56px !important}
+      [data-screen-label="Reserve and footer"] > div:last-child{flex-direction:column;align-items:flex-start !important;gap:16px !important}
+      [data-grid-overlay]{display:none !important}
+    }
+
+    .q{font:300 clamp(22px,2.1vw,30px)/1.25 var(--font-display);letter-spacing:-.01em;color:var(--ink);margin:0;max-width:none;text-wrap:pretty}
+    .fq{cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .fq .rule{border-top:1px solid var(--rule);transition:border-color .75s cubic-bezier(.16,1,.3,1)}
+    .fq:hover .rule,.fq[data-open] .rule{border-top-color:var(--ink)}
+    .ic{--l:20px;position:relative;display:block;width:20px;height:20px;flex:0 0 auto}
+    .ic i{position:absolute;left:50%;top:50%;display:block;background:currentColor;transition:width .7s cubic-bezier(.16,1,.3,1),height .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+    .ic .h{width:20px;height:1px;transform:translate(-50%,-50%) rotate(0deg)}
+    .ic .v{width:1px;height:20px;transform:translate(-50%,-50%) rotate(0deg)}
+    .fq .ic{color:var(--ink-3);transition:color .75s cubic-bezier(.16,1,.3,1)}.fq:hover .ic,.fq[data-open] .ic{color:var(--ink)}
+    .fq[data-open] .ic-a .h{transform:translate(-50%,-50%) rotate(45deg)}
+    .fq[data-open] .ic-a .v{transform:translate(-50%,-50%) rotate(45deg)}
+    @keyframes icH{0%{width:var(--l)}40%{width:1px}100%{width:var(--l)}}
+    @keyframes icV{0%{height:var(--l)}40%{height:1px}100%{height:var(--l)}}
+    @keyframes icHc{0%{width:var(--l)}40%{width:1px}100%{width:var(--l)}}
+    @keyframes icVc{0%{height:var(--l)}40%{height:1px}100%{height:var(--l)}}
+    .fq[data-open] .ic.pulse .h{animation:icH .7s cubic-bezier(.16,1,.3,1)}
+    .fq[data-open] .ic.pulse .v{animation:icV .7s cubic-bezier(.16,1,.3,1)}
+    .fq.closing .ic.pulse .h{animation:icHc .7s cubic-bezier(.16,1,.3,1)}
+    .fq.closing .ic.pulse .v{animation:icVc .7s cubic-bezier(.16,1,.3,1)}
+    .fq[data-chars]{position:relative}
+    .fq[data-chars] .ch{display:inline-block;opacity:0;filter:blur(5px);white-space:pre;will-change:opacity,filter}
+    .fq[data-chars] .rule{will-change:height}
+    @media (max-width: 820px){
+      [data-screen-label="FAQ"] h2{position:static !important;margin-bottom:56px !important}
+      [data-screen-label="FAQ"] button{padding-right:44px !important}
+    }
+    [data-line-soft]{display:block;white-space:nowrap;opacity:0;transform:translateY(18px);filter:blur(8px)}
+    /* hover language: letters leave upward into blur, copies rise in sharp; the rule retracts to the middle and regrows from centre */
+    .lt{position:relative;display:inline-block;line-height:1}
+    .lt .b{position:absolute;left:0;top:0}
+    .lt [data-c]{display:inline-block;white-space:pre;transition:transform var(--lt-d,1.2s) cubic-bezier(.16,1,.3,1),opacity var(--lt-d,1.2s) cubic-bezier(.16,1,.3,1),filter var(--lt-d,1.2s) cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i)*.025s)}
+    .lt .b [data-c]{transform:translateY(90%);filter:blur(5px);opacity:0}
+    .lt-host:hover .lt .a [data-c]{transform:translateY(-90%);filter:blur(5px);opacity:0}
+    .lt-host:hover .lt .b [data-c]{transform:translateY(0);filter:blur(0);opacity:1}
+    /* press: a short pulse that plays through regardless of hold, letters dip soft and return sharp */
+    .lt-host.is-pressed .lt{animation:ltPress .55s cubic-bezier(.16,1,.3,1)}
+    @keyframes ltPress{0%{filter:blur(0)}30%{filter:blur(2.5px)}100%{filter:blur(0)}}
+    .rl{position:relative;display:block;width:148px;height:1px}
+    .rl span{position:absolute;top:0;height:1px;background:currentColor;opacity:.8}
+    .rl .l{left:0;width:50%;transform-origin:0 50%}.rl .r{right:0;width:50%;transform-origin:100% 50%}.rl .c{left:0;width:100%;transform:scaleX(0);transform-origin:50% 50%}
+    .lt-host:hover .rl .l,.lt-host:hover .rl .r{animation:rlRetract 1.8s cubic-bezier(.16,1,.3,1) both}
+    .lt-host:hover .rl .c{animation:rlRegrow 1.8s cubic-bezier(.16,1,.3,1) both}
+    @keyframes rlRetract{0%{transform:scaleX(1)}35%{transform:scaleX(0)}100%{transform:scaleX(0)}}
+    @keyframes rlRegrow{0%{transform:scaleX(0)}18%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+    html,body{margin:0;padding:0;background:#000;height:auto;overflow:visible}
+    html{overflow-x:clip}
+    a{color:inherit;border-bottom:0}
+    a:hover{color:inherit}
+    button{font:inherit;color:inherit}
+    [data-mask],[data-menu-mask]{clip-path:polygon(50% 100%,50% 100%,50% 100%,50% 100%)}
+    [data-tmask]{clip-path:polygon(50% 100%,50% 100%,50% 100%,50% 100%)}
+    [data-tmask] img{transform:scale(1.14)}
+    [data-line-inner],[data-char]{display:inline-block;transform:translateY(115%)}
+    [data-line]{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+    [data-line-inner]{display:block}
+  </style>
+</helmet>
+
+<div data-cursor-marquee-status="" style="position:fixed;left:0;top:0;z-index:110;pointer-events:none;display:flex;align-items:flex-start;justify-content:flex-start">
+  <div class="cm-card" style="position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:{{ cmBg }};color:{{ cmInk }};-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);will-change:clip-path;font:400 12px/1 var(--font-body);letter-spacing:0">
+    <span data-cursor-marquee-text-target class="cm-text dao-num" style="display:block;position:relative;white-space:nowrap;transform-origin:0;padding:10px 14px">Next seats, 14 October</span>
+    <span data-cursor-marquee-text-target class="cm-text dao-num" style="display:block;position:absolute;left:100%;white-space:nowrap;transform-origin:0;padding:10px 14px">Next seats, 14 October</span>
+  </div>
+</div>
+
+<div data-loader style="position:fixed;inset:0;z-index:100;background:#1C1A17;display:flex;align-items:center;justify-content:center;transform-origin:50% 50%">
+  <span data-loader-tag data-split="chars" style="display:block;position:absolute;left:50%;top:50%;transform:translateX(-50%);margin-top:52px;overflow:hidden;font:500 10px/1.4 var(--font-body);letter-spacing:.22em;text-transform:uppercase;color:rgba(237,232,220,.6);white-space:nowrap">The path of food &amp; hospitality</span>
+</div>
+<span data-loader-logo style="position:fixed;left:50%;top:50%;margin:-30px 0 0 -63px;z-index:101;display:block;width:126px;height:60px;background:#EDE8DC;-webkit-mask:url(/assets/dao-mark.svg) center/contain no-repeat;mask:url(/assets/dao-mark.svg) center/contain no-repeat;pointer-events:none"></span>
+
+<nav data-nav style="position:fixed;top:0;left:0;right:0;z-index:80;display:grid;grid-template-columns:1fr auto 1fr;align-items:start;padding:22px 40px;color:{{ navColor }};transition:color 1s cubic-bezier(.16,1,.3,1);opacity:0">
+  <span data-nav-left style="font:500 10px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;opacity:.7;justify-self:start;margin-top:12px">Koh Phangan</span>
+  <a href="#" data-nav-mark aria-label="Dao" style="display:block;width:74px;height:35px;background:currentColor;-webkit-mask:url(/assets/dao-mark.svg) center/contain no-repeat;mask:url(/assets/dao-mark.svg) center/contain no-repeat;opacity:0;width:60px;height:29px"></a>
+  <button data-nav-menu class="lt-host" onClick="{{ toggleMenu }}" style="justify-self:end;margin-top:12px;background:none;border:0;padding:0;cursor:pointer;font:500 10px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;color:inherit;position:relative;display:grid">
+    <span data-word="menu" class="lt" style="grid-area:1/1;justify-self:end"><span class="a">{{ menuA }}</span><span class="b" aria-hidden="true">{{ menuB }}</span></span>
+    <span data-word="close" class="lt" style="grid-area:1/1;justify-self:end;visibility:hidden" aria-hidden="true"><span class="a">{{ closeA }}</span><span class="b" aria-hidden="true">{{ closeB }}</span></span>
+  </button>
+</nav>
+
+<div data-menu-scrim style="position:fixed;inset:0;z-index:69;background:#000;opacity:0;pointer-events:none"></div>
+<div data-menu-panel class="dao-paper" data-theme="dark" style="position:fixed;left:40px;right:40px;top:80px;bottom:0;z-index:70;background:#15130F;color:#EDE8DC;visibility:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:0 40px;box-sizing:border-box;overflow:hidden">
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;flex:1;min-height:0;align-items:end;padding:48px 0 40px">
+    <a href="#" data-menu-item onClick="{{ closeMenu }}" style="display:flex;flex-direction:column;gap:16px;text-decoration:none;color:inherit;border:0">
+      <span data-menu-mask style="display:block;position:relative;aspect-ratio:2 / 3;overflow:hidden;width:min(100%, calc((100vh - 336px) * 2 / 3))"><img src="/assets/p2/table-guests.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:35% 50%;display:block"></span>
+      <span data-menu-label style="display:flex;align-items:baseline;justify-content:space-between;gap:10px"><span class="dao-num" style="font:400 12px/1 var(--font-body);color:rgba(237,232,220,.45);order:2">01</span><span style="font:300 24px/1.1 var(--font-display);letter-spacing:-.01em">Home</span></span>
+    </a>
+    <a href="/story" data-menu-item style="display:flex;flex-direction:column;gap:16px;text-decoration:none;color:inherit;border:0">
+      <span data-menu-mask style="display:block;position:relative;aspect-ratio:2 / 3;overflow:hidden;width:min(100%, calc((100vh - 336px) * 2 / 3))"><img src="/assets/p2/foraging.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></span>
+      <span data-menu-label style="display:flex;align-items:baseline;justify-content:space-between;gap:10px"><span class="dao-num" style="font:400 12px/1 var(--font-body);color:rgba(237,232,220,.45);order:2">02</span><span style="font:300 24px/1.1 var(--font-display);letter-spacing:-.01em">Story</span></span>
+    </a>
+    <a href="/evening" data-menu-item style="display:flex;flex-direction:column;gap:16px;text-decoration:none;color:inherit;border:0">
+      <span data-menu-mask style="display:block;position:relative;aspect-ratio:2 / 3;overflow:hidden;width:min(100%, calc((100vh - 336px) * 2 / 3))"><img src="/assets/p2/plating-hands.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></span>
+      <span data-menu-label style="display:flex;align-items:baseline;justify-content:space-between;gap:10px"><span class="dao-num" style="font:400 12px/1 var(--font-body);color:rgba(237,232,220,.45);order:2">03</span><span style="font:300 24px/1.1 var(--font-display);letter-spacing:-.01em">Evening</span></span>
+    </a>
+    <a href="/reserve" data-menu-item style="display:flex;flex-direction:column;gap:16px;text-decoration:none;color:inherit;border:0">
+      <span data-menu-mask style="display:block;position:relative;aspect-ratio:2 / 3;overflow:hidden;width:min(100%, calc((100vh - 336px) * 2 / 3))"><img src="/assets/p2/set-table.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;display:block"></span>
+      <span data-menu-label style="display:flex;align-items:baseline;justify-content:space-between;gap:10px"><span class="dao-num" style="font:400 12px/1 var(--font-body);color:rgba(237,232,220,.45);order:2">04</span><span style="font:300 24px/1.1 var(--font-display);letter-spacing:-.01em">Reserve</span></span>
+    </a>
+  </div>
+  <div data-menu-contact style="flex:none;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:20px 0 28px;border-top:1px solid rgba(237,232,220,.18);font:400 12px/1.5 var(--font-body);color:rgba(237,232,220,.7)">
+    <span>hello@daokohphangan.com</span>
+    <span class="dao-num">+66 00 000 0000</span>
+    <span>Koh Phangan, Surat Thani, Thailand</span>
+  </div>
+</div>
+
+<div data-page-label="Home" data-page style="position:relative;background:#000;min-height:100vh">
+
+  <section data-screen-label="Hero" data-hero style="position:sticky;top:0;z-index:1;height:100vh;min-height:640px;overflow:hidden;color:#F7F4EC;transform-origin:50% 50%">
+    <div data-hero-mask style="position:absolute;inset:0;overflow:hidden;clip-path:polygon(50% 100%,50% 100%,50% 100%,50% 100%)">
+      <video data-hero-img src="/assets/hero-720.mp4" data-hls="https://vz-4464ccc5-748.b-cdn.net/2cb65dcb-c4aa-4e56-b2ac-b8d95ed95d78/playlist.m3u8" poster="/assets/p2/hero-nir-plating.jpg" autoplay muted loop playsinline preload="auto" aria-label="Nir plating in the kitchen during service" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block;transform:scale(1.18)"></video>
+      <span style="position:absolute;inset:0;background:var(--scrim-floor)"></span>
+      <span style="position:absolute;inset:0;background:var(--scrim-band)"></span>
+      <span style="position:absolute;left:0;right:0;top:0;height:160px;background:linear-gradient(180deg,rgba(0,0,0,.28),transparent)"></span>
+    </div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:0 24px;text-align:center">
+      <h1 data-hero-title style="max-width:720px;font:300 clamp(40px,4.45vw,64px)/1.2 var(--font-display);letter-spacing:-.02em;color:#F7F4EC;margin:0">
+        <span data-hero-line style="display:block;transform:translateY(28px);filter:blur(8px);opacity:0">Dinner as a journey,</span>
+        <span data-hero-line style="display:block;transform:translateY(28px);filter:blur(8px);opacity:0">a sixteen-seat chef&rsquo;s table</span>
+      </h1>
+      <div data-hero-cta style="display:flex;flex-direction:column;align-items:center">
+          <a href="/reserve" data-hero-reserve class="lt-host" onClick="{{ pressPulse }}" data-cursor-marquee-text="Next seats, 14 October  ·  " style="display:inline-flex;flex-direction:column;gap:12px;align-items:center;background:none;border:0;padding:0;cursor:pointer;font:500 12px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;color:var(--ink-on-image);--lt-d:1.6s;text-decoration:none">
+            <span data-hero-reserve-label class="lt" style="opacity:0;transform:translateY(8px)"><span class="a">{{ reserveA }}</span><span class="b" aria-hidden="true">{{ reserveB }}</span></span>
+            <span data-hero-reserve-rule class="rl" style="transform:scaleX(0);transform-origin:50% 50%"><span class="l"></span><span class="r"></span><span class="c"></span></span>
+          </a>
+      </div>
+    </div>
+    <span data-hero-corner style="position:absolute;right:64px;bottom:40px;font:500 10px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;color:rgba(247,244,236,.6);opacity:0">Nightly, one seating, 19:30</span>
+    <span data-hero-dim style="position:absolute;inset:0;background:#000;opacity:0;pointer-events:none"></span>
+  </section>
+
+      
+
+  <div data-sheet class="dao-paper" data-theme="{{ theme }}" style="position:relative;z-index:2;overflow-x:clip;color:var(--ink);transition:background-color 1.25s cubic-bezier(.16,1,.3,1),color 1.25s cubic-bezier(.16,1,.3,1)">
+
+    <section data-screen-label="Paragraph" data-container style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;padding:180px 64px 160px">
+      <p data-reveal-soft data-split="softlines" data-measure="m" style="grid-column:4 / span 6;justify-self:center;max-width:none;text-align:center;font:300 clamp(24px,2.25vw,32px)/1.4 var(--font-display);letter-spacing:-.01em;color:var(--ink);text-wrap:pretty">Everyone arrives at the same hour. The table is already set, the music already playing, the first course already in the making. For the next few hours you&rsquo;re Nir&rsquo;s guest.</p>
+    </section>
+
+    <section data-screen-label="Duo" data-container style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;padding:0 64px 64px;align-items:start">
+      <figure style="grid-column:2 / span 5;margin:0;display:flex;flex-direction:column;gap:16px">
+        <div data-mask data-parallax style="position:relative;aspect-ratio:533 / 684;overflow:hidden">
+          <img src="/assets/p2/hands-plating.jpg" alt="Hands plating a first course" style="position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;object-position:62% 50%;display:block">
+        </div>
+        <figcaption data-reveal data-split="lines" style="font:400 12px/1.5 var(--font-body);color:var(--ink-2);max-width:340px">Hands at the pass, the first course going out.</figcaption>
+      </figure>
+      <figure style="grid-column:9 / 13;margin:26% 0 0;display:flex;flex-direction:column;gap:16px">
+        <div data-mask data-parallax style="position:relative;aspect-ratio:421 / 550;overflow:hidden">
+          <img src="/assets/p2/kitchen-service.jpg" alt="Nir at the pass, kitchen open to the room" style="position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;object-position:72% 50%;display:block">
+        </div>
+        <figcaption data-reveal data-split="lines" style="font:400 12px/1.5 var(--font-body);color:var(--ink-2);max-width:300px">Nir at the pass. The kitchen is open to the table.</figcaption>
+      </figure>
+    </section>
+
+    <section data-screen-label="Trail" data-trail style="position:relative;height:100vh;overflow:hidden">
+      <div data-track style="position:relative;display:flex;align-items:center;gap:3vw;height:100vh;width:max-content;padding:0 8vw 0 64px;box-sizing:border-box;will-change:transform">
+        <div data-tmask data-side="1" data-off="10" style="position:relative;flex:0 0 auto;height:40vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/foraging.jpg" alt="Gathering greens in the garden" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:50% 50%;display:block"></div>
+        <div data-tmask data-side="1" data-off="16" style="position:relative;flex:0 0 auto;height:48vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/prep-trays.jpg" alt="Fruit drying on trays" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:70% 50%;display:block"></div>
+        <div data-tmask data-side="1" data-off="6" style="position:relative;flex:0 0 auto;height:55vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/ceramics.jpg" alt="Ceramics made on the island" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:50% 50%;display:block"></div>
+        <div data-tmask data-side="-1" data-off="-10" style="position:relative;flex:0 0 auto;height:51vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/facade.jpg" alt="The door on the street" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:55% 50%;display:block"></div>
+        <div data-tmask data-side="-1" data-off="-16" style="position:relative;flex:0 0 auto;height:44vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/set-table.jpg" alt="The table set with candles" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:60% 50%;display:block"></div>
+        <div data-tmask data-side="-1" data-off="-6" style="position:relative;flex:0 0 auto;height:39vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/table-guests.jpg" alt="The one table, guests seated" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:40% 50%;display:block"></div>
+        <div data-tmask data-side="1" data-off="10" style="position:relative;flex:0 0 auto;height:46vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/kitchen-service.jpg" alt="The kitchen mid-service" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:30% 50%;display:block"></div>
+        <div data-tmask data-side="1" data-off="16" style="position:relative;flex:0 0 auto;height:53vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/dish-slate.jpg" alt="A course plated on stone" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:50% 50%;display:block"></div>
+        <div data-tmask data-side="1" data-off="6" style="position:relative;flex:0 0 auto;height:49vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/last-garnish.jpg" alt="The last garnish" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:60% 50%;display:block"></div>
+        <div data-tmask data-side="-1" data-off="-8" style="position:relative;flex:0 0 auto;height:44vh;aspect-ratio:3 / 4;overflow:hidden;align-self:center"><img src="/assets/p2/hands-plating.jpg" alt="The first course going out" style="position:absolute;inset:0 -8%;width:116%;height:100%;object-fit:cover;object-position:62% 50%;display:block"></div>
+        <p data-trail-text data-split="softlines" style="position:absolute;left:calc(64px + 162.0vh + 12vw - 13vw);top:calc(56vh + 10vh);margin:0;width:26vw;min-width:320px;max-width:440px;font:300 clamp(22px,1.9vw,28px)/1.3 var(--font-display);letter-spacing:-.01em;color:var(--ink);max-width:none;text-wrap:pretty">The day starts long before dinner. Gardens and the market in the morning, the kitchen from noon. What is found decides what is cooked.</p>
+        <p data-trail-text data-split="softlines" style="position:absolute;left:calc(64px + 262.1vh + 21vw - 13vw);bottom:calc(60.5vh + 10vh);margin:0;width:26vw;min-width:320px;max-width:440px;font:300 clamp(22px,1.9vw,28px)/1.3 var(--font-display);letter-spacing:-.01em;color:var(--ink);max-width:none;text-wrap:pretty">The kitchen is open to the room. Nir plates each course himself, walks it to the table and tells you what it is.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="The evening" data-container style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;padding:200px 64px 180px;box-sizing:border-box;align-items:start"><div style="grid-column:1 / span 12;margin-bottom:96px"><div data-mask data-parallax style="position:relative;aspect-ratio:21 / 9;overflow:hidden"><img class="img" src="/assets/p2/set-table.jpg" alt="" style="object-position:55% 50%"></div></div><div style="grid-column:1 / span 12;display:flex;flex-direction:column;"><div data-block class="hr hr-glow" style="border-top:1px solid var(--rule);display:grid;grid-template-columns:160px minmax(0,1fr) auto;gap:0 24px;align-items:baseline;padding:28px 0"><span class="hv"><img src="/assets/p2/facade.jpg" alt="" style="object-position:55% 50%"><span class="sc"></span></span><span class="meta">Arrival</span><span class="word" data-measure="l" style="">Everyone arrives together. The door opens at a quarter past seven.</span><span class="fig2" style="font-size:clamp(48px,5vw,80px);line-height:1.1;">19:30</span></div><div data-block class="hr hr-glow" style="border-top:1px solid var(--rule);display:grid;grid-template-columns:160px minmax(0,1fr) auto;gap:0 24px;align-items:baseline;padding:28px 0"><span class="hv"><img src="/assets/p2/last-garnish.jpg" alt="" style="object-position:60% 50%"><span class="sc"></span></span><span class="meta">Duration</span><span class="word" data-measure="l" style="">Nobody is hurried out.</span><span class="fig2" style="font-size:clamp(48px,5vw,80px);line-height:1.1;">~3 h</span></div><div data-block class="hr hr-glow" style="border-top:1px solid var(--rule);display:grid;grid-template-columns:160px minmax(0,1fr) auto;gap:0 24px;align-items:baseline;padding:28px 0"><span class="hv"><img src="/assets/p2/table-guests.jpg" alt="" style="object-position:40% 50%"><span class="sc"></span></span><span class="meta">Seats</span><span class="word" data-measure="l" style="">One table. Singles, pairs and groups sit together.</span><span class="fig2" style="font-size:clamp(48px,5vw,80px);line-height:1.1;">16</span></div><div data-block class="hr hr-glow" style="border-top:1px solid var(--rule);display:grid;grid-template-columns:160px minmax(0,1fr) auto;gap:0 24px;align-items:baseline;padding:28px 0"><span class="hv"><img src="/assets/p2/dish-slate.jpg" alt="" style="object-position:50% 50%"><span class="sc"></span></span><span class="meta">Menu</span><span class="word" data-measure="l" style="">Chosen when you book.</span><span class="fig2" style="font-size:clamp(48px,5vw,80px);line-height:1.1">Meat &amp; fish or fish</span></div><div style="border-top:1px solid var(--rule)"></div></div>
+  </section>
+
+    <div data-void style="position:relative;background:#000">
+    <section data-screen-label="The shared table" data-recede class="dao-paper" data-theme="dark" style="position:sticky;top:0;z-index:1;height:100vh;min-height:640px;overflow:hidden;color:var(--ink-on-image);transform-origin:50% 50%;background:#15130F">
+      <div data-mask data-parallax style="position:absolute;inset:0;overflow:hidden">
+        <img src="/assets/p2/table-guests.jpg" alt="Guests at the one table" style="position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;object-position:40% 50%;display:block">
+        <span style="position:absolute;inset:0;background:var(--scrim-floor)"></span>
+        <span style="position:absolute;inset:0;background:var(--scrim-band)"></span>
+      </div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 64px">
+        <p data-reveal-soft data-split="softlines" data-measure="m" style="width:min(760px,80vw);margin:0;text-align:center;font:300 clamp(26px,2.6vw,38px)/1.3 var(--font-display);letter-spacing:-.01em;color:var(--ink-on-image);max-width:none;text-wrap:pretty">You will be seated with people you have not met. The first fifteen minutes can be quiet. Then Nir comes out, introduces the evening, and the table stops being a room full of strangers.</p>
+      </div>
+      <span style="position:absolute;right:64px;bottom:40px;font:500 10px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;color:var(--meta-on-image)">Sixteen seats, one table</span>
+      <span data-recede-dim style="position:absolute;inset:0;background:#000;opacity:0;pointer-events:none"></span>
+    </section>
+
+    <div data-over class="dao-paper" data-theme="dark" style="position:relative;z-index:2;background:#15130F">
+
+    <section data-screen-label="Price and pairing" data-container style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;padding:200px 64px 180px">
+      <div style="grid-column:4 / span 6;display:flex;flex-direction:column;align-items:center;text-align:center;gap:48px">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+          <p data-reveal-soft data-split="softlines" style="margin:0;font:300 clamp(64px,7vw,112px)/1 var(--font-display);letter-spacing:-.02em;color:var(--ink);max-width:none">THB 3,900</p>
+          <p data-reveal-soft data-split="softlines" style="margin:0;font:400 12px/1.5 var(--font-body);color:var(--ink-2);max-width:none">Per guest, the full menu. Water and tea are included.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;width:100%">
+          <div data-block style="display:flex;flex-direction:column;gap:20px;padding-top:20px;border-top:1px solid var(--rule)"><span style="font:500 10px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)">Wine pairing, four glasses</span><span style="font:300 clamp(40px,4vw,64px)/1 var(--font-display);letter-spacing:-.02em;color:var(--ink)">THB 2,200</span></div>
+          <div data-block style="display:flex;flex-direction:column;gap:20px;padding-top:20px;border-top:1px solid var(--rule)"><span style="font:500 10px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)">Wine pairing, five glasses</span><span style="font:300 clamp(40px,4vw,64px)/1 var(--font-display);letter-spacing:-.02em;color:var(--ink)">THB 2,700</span></div>
+        </div>
+        <p data-reveal-soft data-split="softlines" data-measure="l" style="margin:0;font:400 14px/1.55 var(--font-body);color:var(--ink-2);max-width:none">Half the menu at booking, refundable up to 48 hours before. No dress code, it is a warm island evening. Sri Thanu, west coast, ten minutes by scooter from Thong Sala, and a pin is sent with the booking. Seats open four months ahead. Dietary needs are taken at booking, not at the table.</p>
+        <div data-press-wall data-block style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;width:min(100%, 520px);margin:8px auto 0;color:var(--ink-3)">
+          <span data-press-slot style="position:relative;display:flex;align-items:center;justify-content:center;height:48px;overflow:hidden"><span data-press-logo role="img" aria-label="The New York Times" style="--w:136px;--h:23px;display:block;width:136px;height:23px;background:currentColor;-webkit-mask:url(/assets/press/new-york-times.svg) center/contain no-repeat;mask:url(/assets/press/new-york-times.svg) center/contain no-repeat"></span></span>
+          <span data-press-slot style="position:relative;display:flex;align-items:center;justify-content:center;height:48px;overflow:hidden"><span data-press-logo role="img" aria-label="The New Yorker" style="--w:160px;--h:18px;display:block;width:160px;height:18px;background:currentColor;-webkit-mask:url(/assets/press/new-yorker.svg) center/contain no-repeat;mask:url(/assets/press/new-yorker.svg) center/contain no-repeat"></span></span>
+          <span data-press-slot style="position:relative;display:flex;align-items:center;justify-content:center;height:48px;overflow:hidden"><span data-press-logo role="img" aria-label="Michelin Guide" style="--w:27px;--h:30px;display:block;width:27px;height:30px;background:currentColor;-webkit-mask:url(/assets/press/michelin-guide.svg) center/contain no-repeat;mask:url(/assets/press/michelin-guide.svg) center/contain no-repeat"></span></span>
+          <span data-press-pool style="display:none"><span data-press-logo role="img" aria-label="Bon Appétit" style="--w:87px;--h:30px;display:block;width:87px;height:30px;background:currentColor;-webkit-mask:url(/assets/press/bon-appetit.svg) center/contain no-repeat;mask:url(/assets/press/bon-appetit.svg) center/contain no-repeat"></span><span data-press-logo role="img" aria-label="New York Magazine" style="--w:89px;--h:21px;display:block;width:89px;height:21px;background:currentColor;-webkit-mask:url(/assets/press/new-york-magazine.svg) center/contain no-repeat;mask:url(/assets/press/new-york-magazine.svg) center/contain no-repeat"></span></span>
+        </div>
+        <div data-reveal-soft data-split="none" style="margin-top:0"><a href="/reserve" class="lt-host" onClick="{{ pressPulse }}" data-cursor-marquee-text="Next seats, 14 October  ·  " style="display:inline-flex;flex-direction:column;gap:12px;align-items:center;background:none;border:0;padding:0;cursor:pointer;font:500 12px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;color:var(--ink);--lt-d:1.6s;text-decoration:none"><span class="lt"><span class="a">{{ reserveA }}</span><span class="b" aria-hidden="true">{{ reserveB }}</span></span><span class="rl"><span class="l"></span><span class="r"></span><span class="c"></span></span></a></div>
+      </div>
+    </section>
+
+    <section data-screen-label="Nir" data-container style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;padding:120px 64px 200px;align-items:start">
+      <p data-reveal-soft data-split="softlines" style="grid-column:4 / span 6;justify-self:center;margin:0 0 48px;text-align:center;font:300 clamp(28px,2.8vw,40px)/1.15 var(--font-display);letter-spacing:-.01em;color:var(--ink);max-width:none">Nir Mesika</p>
+      <div data-mask data-parallax style="grid-column:5 / span 4;position:relative;aspect-ratio:3 / 4;overflow:hidden">
+        <img src="/assets/p2/nir-entrance.jpg" alt="Nir Mesika at the door" style="position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;object-position:50% 30%;display:block">
+      </div>
+      <p data-reveal-soft data-split="softlines" data-measure="m" style="grid-column:4 / span 6;margin:40px 0 0;text-align:center;font:300 clamp(20px,1.8vw,26px)/1.45 var(--font-display);justify-self:center;letter-spacing:-.01em;color:var(--ink-2);max-width:none;text-wrap:pretty">He grew up in a house where his grandmother raised nine children and the older ones cooked for the younger. Israel, then Milan, New York, and this island. The shared table is how he was fed, and it is how he cooks.</p>
+      <div data-reveal-soft data-split="none" style="grid-column:4 / span 6;display:flex;justify-content:center;margin-top:32px"><a href="/story" class="lt-host" onClick="{{ pressPulse }}" style="display:inline-flex;flex-direction:column;gap:12px;align-items:center;background:none;border:0;padding:0;cursor:pointer;font:500 12px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;color:var(--ink);--lt-d:1.6s;text-decoration:none"><span class="lt"><span class="a">{{ storyA }}</span><span class="b" aria-hidden="true">{{ storyB }}</span></span><span class="rl"><span class="l"></span><span class="r"></span><span class="c"></span></span></a></div>
+    </section>
+
+    <section data-screen-label="FAQ" data-container aria-labelledby="faq61-h" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;padding:120px 64px 200px;box-sizing:border-box;align-items:start"><h2 id="faq61-h" data-reveal-soft data-split="softlines" style="grid-column:2 / span 3;position:sticky;top:140px;align-self:start;margin:0;font:300 clamp(36px,3.6vw,56px)/1.05 var(--font-display);letter-spacing:-.02em;color:#F3EFE5;max-width:none;text-wrap:pretty">Questions</h2>
+<ul style="grid-column:5 / span 8;display:flex;flex-direction:column;margin:0;padding:0"><li class="fq" data-fq data-chars style="list-style:none;margin:0;position:relative"><h3 class="rule" style="margin:0;padding:0;font:inherit"><button type="button" aria-expanded="false" aria-controls="faq61-a0" id="faq61-q0" style="display:block;width:100%;text-align:left;background:none;border:0;padding:26px 56px 26px 0;margin:0;cursor:pointer;font:inherit;color:inherit;box-sizing:border-box;line-height:1.25"><span class="q" style="display:block;color:#F3EFE5;line-height:1.25">Can I come alone? <span class="ansin" id="faq61-a0" role="region" aria-labelledby="faq61-q0" style="color:var(--ink-2)"><span class="a" data-chars-text="Yes, and many do. Singles, pairs and groups sit together at the one table, and the seating is arranged so nobody is at an end by themselves." style="font:inherit;color:inherit;max-width:none"></span></span></span><span style="position:absolute;right:0;top:calc(26px + .625em - 10px);pointer-events:none;font-size:clamp(22px,2.1vw,30px)"><span class="ic ic-a pulse" aria-hidden="true"><i class="h"></i><i class="v"></i></span></span></button></h3></li><li class="fq" data-fq data-chars style="list-style:none;margin:0;position:relative"><h3 class="rule" style="margin:0;padding:0;font:inherit"><button type="button" aria-expanded="false" aria-controls="faq61-a1" id="faq61-q1" style="display:block;width:100%;text-align:left;background:none;border:0;padding:26px 56px 26px 0;margin:0;cursor:pointer;font:inherit;color:inherit;box-sizing:border-box;line-height:1.25"><span class="q" style="display:block;color:#F3EFE5;line-height:1.25">What if I do not eat meat? <span class="ansin" id="faq61-a1" role="region" aria-labelledby="faq61-q1" style="color:var(--ink-2)"><span class="a" data-chars-text="Choose the fish menu when you book. Other dietary needs are taken at booking, not at the table, and the menu is adapted per seat." style="font:inherit;color:inherit;max-width:none"></span></span></span><span style="position:absolute;right:0;top:calc(26px + .625em - 10px);pointer-events:none;font-size:clamp(22px,2.1vw,30px)"><span class="ic ic-a pulse" aria-hidden="true"><i class="h"></i><i class="v"></i></span></span></button></h3></li><li class="fq" data-fq data-chars style="list-style:none;margin:0;position:relative"><h3 class="rule" style="margin:0;padding:0;font:inherit"><button type="button" aria-expanded="false" aria-controls="faq61-a2" id="faq61-q2" style="display:block;width:100%;text-align:left;background:none;border:0;padding:26px 56px 26px 0;margin:0;cursor:pointer;font:inherit;color:inherit;box-sizing:border-box;line-height:1.25"><span class="q" style="display:block;color:#F3EFE5;line-height:1.25">Is there a menu I can read first? <span class="ansin" id="faq61-a2" role="region" aria-labelledby="faq61-q2" style="color:var(--ink-2)"><span class="a" data-chars-text="No. The menu is fixed and changes with what is found that week. You will know it is Thai and Levantine, meat and fish or fish only, and that is enough to decide." style="font:inherit;color:inherit;max-width:none"></span></span></span><span style="position:absolute;right:0;top:calc(26px + .625em - 10px);pointer-events:none;font-size:clamp(22px,2.1vw,30px)"><span class="ic ic-a pulse" aria-hidden="true"><i class="h"></i><i class="v"></i></span></span></button></h3></li><li class="fq" data-fq data-chars style="list-style:none;margin:0;position:relative"><h3 class="rule" style="margin:0;padding:0;font:inherit"><button type="button" aria-expanded="false" aria-controls="faq61-a3" id="faq61-q3" style="display:block;width:100%;text-align:left;background:none;border:0;padding:26px 56px 26px 0;margin:0;cursor:pointer;font:inherit;color:inherit;box-sizing:border-box;line-height:1.25"><span class="q" style="display:block;color:#F3EFE5;line-height:1.25">Can I drink something other than the pairing? <span class="ansin" id="faq61-a3" role="region" aria-labelledby="faq61-q3" style="color:var(--ink-2)"><span class="a" data-chars-text="Water and tea are included. Wine is poured as a pairing only, four or five glasses. There is no bar and no list." style="font:inherit;color:inherit;max-width:none"></span></span></span><span style="position:absolute;right:0;top:calc(26px + .625em - 10px);pointer-events:none;font-size:clamp(22px,2.1vw,30px)"><span class="ic ic-a pulse" aria-hidden="true"><i class="h"></i><i class="v"></i></span></span></button></h3></li><li class="fq" data-fq data-chars style="list-style:none;margin:0;position:relative"><h3 class="rule" style="margin:0;padding:0;font:inherit"><button type="button" aria-expanded="false" aria-controls="faq61-a4" id="faq61-q4" style="display:block;width:100%;text-align:left;background:none;border:0;padding:26px 56px 26px 0;margin:0;cursor:pointer;font:inherit;color:inherit;box-sizing:border-box;line-height:1.25"><span class="q" style="display:block;color:#F3EFE5;line-height:1.25">What happens if I am late? <span class="ansin" id="faq61-a4" role="region" aria-labelledby="faq61-q4" style="color:var(--ink-2)"><span class="a" data-chars-text="Everyone arrives at 19:30 and the first course goes out to the whole table at once. If you are late, the table waits a little, then starts without you." style="font:inherit;color:inherit;max-width:none"></span></span></span><span style="position:absolute;right:0;top:calc(26px + .625em - 10px);pointer-events:none;font-size:clamp(22px,2.1vw,30px)"><span class="ic ic-a pulse" aria-hidden="true"><i class="h"></i><i class="v"></i></span></span></button></h3></li><li class="fq" data-fq data-chars style="list-style:none;margin:0;position:relative"><h3 class="rule" style="margin:0;padding:0;font:inherit"><button type="button" aria-expanded="false" aria-controls="faq61-a5" id="faq61-q5" style="display:block;width:100%;text-align:left;background:none;border:0;padding:26px 56px 26px 0;margin:0;cursor:pointer;font:inherit;color:inherit;box-sizing:border-box;line-height:1.25"><span class="q" style="display:block;color:#F3EFE5;line-height:1.25">Can I book the whole table? <span class="ansin" id="faq61-a5" role="region" aria-labelledby="faq61-q5" style="color:var(--ink-2)"><span class="a" data-chars-text="Yes, for sixteen. Write to us and we will hold a date. Smaller private groups are seated with other guests." style="font:inherit;color:inherit;max-width:none"></span></span></span><span style="position:absolute;right:0;top:calc(26px + .625em - 10px);pointer-events:none;font-size:clamp(22px,2.1vw,30px)"><span class="ic ic-a pulse" aria-hidden="true"><i class="h"></i><i class="v"></i></span></span></button></h3></li><li class="fq" data-fq data-chars style="list-style:none;margin:0;position:relative"><h3 class="rule" style="margin:0;padding:0;font:inherit"><button type="button" aria-expanded="false" aria-controls="faq61-a6" id="faq61-q6" style="display:block;width:100%;text-align:left;background:none;border:0;padding:26px 56px 26px 0;margin:0;cursor:pointer;font:inherit;color:inherit;box-sizing:border-box;line-height:1.25"><span class="q" style="display:block;color:#F3EFE5;line-height:1.25">How do I get there? <span class="ansin" id="faq61-a6" role="region" aria-labelledby="faq61-q6" style="color:var(--ink-2)"><span class="a" data-chars-text="Sri Thanu, on the west coast. Ten minutes by scooter from Thong Sala. A pin is sent with the booking." style="font:inherit;color:inherit;max-width:none"></span></span></span><span style="position:absolute;right:0;top:calc(26px + .625em - 10px);pointer-events:none;font-size:clamp(22px,2.1vw,30px)"><span class="ic ic-a pulse" aria-hidden="true"><i class="h"></i><i class="v"></i></span></span></button></h3></li><li style="list-style:none;border-top:1px solid var(--rule)"></li></ul>
+  </section>
+
+    <footer data-screen-label="Reserve and footer" data-container style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;padding:200px 64px 48px;box-sizing:border-box;min-height:100vh;align-content:end;overflow:hidden">
+      <div data-footer-strip style="grid-column:1 / span 12;margin-bottom:96px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px"><a href="#" data-footer-page style="display:flex;flex-direction:column;gap:0;text-decoration:none;color:inherit;border:0"><span data-mask data-parallax style="display:block;position:relative;aspect-ratio:2 / 3;overflow:hidden"><span data-zoom style="position:absolute;inset:0;display:block;transition:transform 1.25s cubic-bezier(.16,1,.3,1);transform-origin:50% 50%"><img src="/assets/p2/table-guests.jpg" alt="" style="position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;object-position:35% 50%;display:block"></span></span><span style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:16px"><span style="font:300 24px/1.1 var(--font-display);letter-spacing:-.01em;color:var(--ink-2)">Home</span><span class="dao-num" style="font:400 12px/1 var(--font-body);color:var(--ink-3)">01</span></span></a><a href="/story" data-footer-page style="display:flex;flex-direction:column;gap:0;text-decoration:none;color:inherit;border:0"><span data-mask data-parallax style="display:block;position:relative;aspect-ratio:2 / 3;overflow:hidden"><span data-zoom style="position:absolute;inset:0;display:block;transition:transform 1.25s cubic-bezier(.16,1,.3,1);transform-origin:50% 50%"><img src="/assets/p2/foraging.jpg" alt="" style="position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;object-position:50% 50%;display:block"></span></span><span style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:16px"><span style="font:300 24px/1.1 var(--font-display);letter-spacing:-.01em;color:var(--ink-2)">Story</span><span class="dao-num" style="font:400 12px/1 var(--font-body);color:var(--ink-3)">02</span></span></a><a href="/evening" data-footer-page style="display:flex;flex-direction:column;gap:0;text-decoration:none;color:inherit;border:0"><span data-mask data-parallax style="display:block;position:relative;aspect-ratio:2 / 3;overflow:hidden"><span data-zoom style="position:absolute;inset:0;display:block;transition:transform 1.25s cubic-bezier(.16,1,.3,1);transform-origin:50% 50%"><img src="/assets/p2/plating-hands.jpg" alt="" style="position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;object-position:50% 50%;display:block"></span></span><span style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:16px"><span style="font:300 24px/1.1 var(--font-display);letter-spacing:-.01em;color:var(--ink-2)">Evening</span><span class="dao-num" style="font:400 12px/1 var(--font-body);color:var(--ink-3)">03</span></span></a><a href="/reserve" data-footer-page style="display:flex;flex-direction:column;gap:0;text-decoration:none;color:inherit;border:0"><span data-mask data-parallax style="display:block;position:relative;aspect-ratio:2 / 3;overflow:hidden"><span data-zoom style="position:absolute;inset:0;display:block;transition:transform 1.25s cubic-bezier(.16,1,.3,1);transform-origin:50% 50%"><img src="/assets/p2/set-table.jpg" alt="" style="position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;object-position:60% 50%;display:block"></span></span><span style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:16px"><span style="font:300 24px/1.1 var(--font-display);letter-spacing:-.01em;color:var(--ink-2)">Reserve</span><span class="dao-num" style="font:400 12px/1 var(--font-body);color:var(--ink-3)">04</span></span></a></div>
+      <p data-reveal-soft data-split="softlines" style="grid-column:1 / span 12;margin:0;font:400 12px/1.5 var(--font-body);color:var(--ink-2);max-width:none">Next available date</p>
+      <p data-reveal-soft data-split="softlines" data-fit style="grid-column:1 / span 12;margin:16px 0 0;font:300 120px/.9 var(--font-display);letter-spacing:-.04em;color:var(--ink);max-width:none;white-space:nowrap">Tuesday 14 October</p>
+      <div data-reveal-soft data-split="none" style="grid-column:1 / span 12;margin-top:48px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;align-items:end;padding-top:24px;border-top:1px solid var(--rule)">
+        <div style="grid-column:1 / span 4"><a href="/reserve" class="lt-host" onClick="{{ pressPulse }}" data-cursor-marquee-text="Next seats, 14 October  ·  " style="display:inline-flex;flex-direction:column;gap:12px;align-items:center;background:none;border:0;padding:0;cursor:pointer;font:500 12px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;color:var(--ink);--lt-d:1.6s;text-decoration:none"><span class="lt"><span class="a">{{ reserveA }}</span><span class="b" aria-hidden="true">{{ reserveB }}</span></span><span class="rl"><span class="l"></span><span class="r"></span><span class="c"></span></span></a></div>
+        <div style="grid-column:6 / span 4;display:flex;flex-direction:column;gap:6px"><a href="#" style="font:400 13px/1.6 var(--font-body);color:var(--ink-2);text-decoration:none;border:0;transition:color .75s cubic-bezier(.16,1,.3,1);" style-hover="color:var(--ink)">hello@daokohphangan.com</a><a href="#" style="font:400 13px/1.6 var(--font-body);color:var(--ink-2);text-decoration:none;border:0;transition:color .75s cubic-bezier(.16,1,.3,1);font-variant-numeric:tabular-nums" style-hover="color:var(--ink)">+66 00 000 0000</a></div>
+        <div style="grid-column:10 / span 3;display:flex;flex-direction:column;gap:6px;text-align:right"><span style="font:400 13px/1.6 var(--font-body);color:var(--ink-2)">Sri Thanu, Koh Phangan</span><span style="font:400 13px/1.6 var(--font-body);color:var(--ink-3)">&copy; Dao, 2026</span></div>
+      </div>
+      
+    </footer>
+
+    </div>
+    </div>
+
+  </div>
+</div>
+
+<div data-grid-overlay style="position:fixed;inset:0;z-index:90;pointer-events:none;display:{{ gridDisplay }};grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;padding:0 64px">
+  <span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span><span style="background:rgba(200,60,40,.08)"></span>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;introLoader&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;every load&quot;,&quot;options&quot;:[&quot;every load&quot;,&quot;once per session&quot;,&quot;off&quot;],&quot;tsType&quot;:&quot;'every load' | 'once per session' | 'off'&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;motionSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.5,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;x&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;gridOverlay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
+class Component extends DCLogic {
+  state = { theme: 'light', overHero: true, menuOpen: false };
+  E = 'expo.out';
+  CLOSED = 'polygon(50% 100%,50% 100%,50% 100%,50% 100%)';
+  OPEN = 'polygon(0% 0%,100% 0%,100% 100%,0% 100%)';
+
+  renderVals() {
+    const { theme, overHero, menuOpen } = this.state;
+    const cream = menuOpen || overHero || theme === 'dark';
+    return {
+      theme,
+      navColor: cream ? '#F7F4EC' : '#1A1815',
+      // the pill reads as frosted ground: cream glass over photography and dark ground, ink glass over paper
+      cmBg: cream ? 'rgba(237,232,220,.22)' : 'rgba(26,24,21,.14)',
+      cmInk: cream ? '#F7F4EC' : '#1A1815',
+      menuA: this.letters('Menu', 'ma'), menuB: this.letters('Menu', 'mb'),
+      closeA: this.letters('Close', 'ca'), closeB: this.letters('Close', 'cb'),
+      reserveA: this.letters('Reserve a seat', 'ra'), storyA: this.letters('Read the story', 'sa'), storyB: this.letters('Read the story', 'sb'),
+      reserveB: this.letters('Reserve a seat', 'rb'),
+      ruleWidth: 148,
+      gridDisplay: (this.props.gridOverlay ?? false) ? 'grid' : 'none',
+      pressPulse: (e) => this.pulse(e && e.currentTarget),
+      toggleMenu: (e) => { e && e.preventDefault(); this.pulse(e && e.currentTarget); if (this._swapping) return; this.state.menuOpen ? this.closeMenu() : this.openMenu(); },
+      closeMenu: (e) => { e && e.preventDefault(); this.closeMenu(); }
+    };
+  }
+
+  componentDidMount() {
+    this._tries = 0; this._stable = 0; this._lastW = -1;
+    const wait = () => {
+      const track = document.querySelector('[data-track]'), para = document.querySelector('[data-reveal-soft]');
+      if (!this._fontsAsked && document.fonts) { this._fontsAsked = true; Promise.all(['300 32px "Season Mix"', '400 32px "Season Mix"', '400 14px Inter', '500 10px Inter'].map(f => document.fonts.load(f).catch(() => {}))).then(() => { this._fontsIn = true; }); }
+      const serifIn = !document.fonts || this._fontsIn || document.fonts.check('300 32px "Season Mix"') || this._tries > 500;
+      const loaded = window.gsap && window.ScrollTrigger && (window.Lenis || this._tries > 240) && track && para && document.querySelector('[data-hero-reserve-label]') && serifIn && document.fonts && document.fonts.status === 'loaded';
+      // wait for a settled layout: the track wider than the viewport, the paragraph measured, both unchanged across frames
+      const w = track ? track.scrollWidth : 0;
+      const laidOut = loaded && w > window.innerWidth && para.getBoundingClientRect().width > 0;
+      this._stable = laidOut && w === this._lastW ? this._stable + 1 : 0;
+      this._lastW = w;
+      if (this._stable >= 3 || this._tries > 600) return this.init();
+      this._tries++; requestAnimationFrame(wait);
+    };
+    wait();
+  }
+
+  componentDidUpdate() {
+    const speed = this.props.motionSpeed ?? 1;
+    if (window.gsap && this._speed !== speed) { this._speed = speed; window.gsap.globalTimeline.timeScale(speed); }
+  }
+
+  letters(word, k) { return Array.from(word).map((ch, i) => React.createElement('span', { key: k + i, 'data-c': '', style: { '--i': i } }, ch)); }
+
+  // the switch between Menu and Close: the current word rolls up and out, the other rolls up and in, letter by letter, no blur
+  pulse(el) {
+    if (!el) return;
+    el.classList.remove('is-pressed'); void el.offsetWidth; el.classList.add('is-pressed');
+    clearTimeout(el._pulseT); el._pulseT = setTimeout(() => el.classList.remove('is-pressed'), 800);
+  }
+
+  swapMenuWord(next) {
+    const gsap = window.gsap, E = this.E;
+    this.setState({ menuOpen: next });
+    const outW = this.q(next ? '[data-word="menu"]' : '[data-word="close"]'), inW = this.q(next ? '[data-word="close"]' : '[data-word="menu"]');
+    if (!outW || !inW) return;
+    // only the word wrappers move; the letters keep their CSS hover transforms untouched
+    gsap.killTweensOf([outW, inW]);
+    gsap.set([outW, inW], { visibility: 'visible' });
+    this._swapping = true;
+    gsap.to(outW, { yPercent: -100, opacity: 0, duration: 0.9, ease: E, onComplete: () => gsap.set(outW, { visibility: 'hidden', yPercent: 0, opacity: 1 }) });
+    gsap.fromTo(inW, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1, ease: E, delay: 0.06, onComplete: () => { this._swapping = false; } });
+  }
+
+  q(s) { return document.querySelector(s); }
+  qa(s) { return Array.from(document.querySelectorAll(s)); }
+  isMobile() { return window.matchMedia('(max-width: 820px)').matches; }
+
+  splitChars(el) {
+    const text = el.textContent;
+    el.textContent = '';
+    for (const ch of text) {
+      const s = document.createElement('span');
+      s.setAttribute('data-char', '');
+      s.textContent = ch === ' ' ? '\u00A0' : ch;
+      el.appendChild(s);
+    }
+    return el.querySelectorAll('[data-char]');
+  }
+
+  splitLines(el) {
+    const words = el.textContent.trim().split(/\s+/);
+    el.textContent = '';
+    const spans = words.map(w => { const s = document.createElement('span'); s.textContent = w; s.style.display = 'inline-block'; el.appendChild(s); el.appendChild(document.createTextNode(' ')); return s; });
+    const lines = []; let top = null;
+    spans.forEach(s => { if (s.offsetTop !== top) { top = s.offsetTop; lines.push([]); } lines[lines.length - 1].push(s.textContent); });
+    el.textContent = '';
+    lines.forEach(ws => {
+      const outer = document.createElement('span'); outer.setAttribute('data-line', '');
+      const inner = document.createElement('span'); inner.setAttribute('data-line-inner', ''); inner.textContent = ws.join(' ');
+      outer.appendChild(inner); el.appendChild(outer);
+    });
+    return el.querySelectorAll('[data-line-inner]');
+  }
+
+  // lines with no mask: each line is its own block, rising and sharpening in place
+  splitSoftLines(el) {
+    if (!el.dataset.text) el.dataset.text = el.textContent.trim();
+    const shown = el.dataset.revealed === '1';
+    const words = el.dataset.text.split(/\s+/);
+    el.textContent = '';
+    const spans = words.map(w => { const s = document.createElement('span'); s.textContent = w; s.style.display = 'inline-block'; el.appendChild(s); el.appendChild(document.createTextNode(' ')); return s; });
+    const lines = []; let top = null;
+    spans.forEach(s => { if (s.offsetTop !== top) { top = s.offsetTop; lines.push([]); } lines[lines.length - 1].push(s.textContent); });
+    el.textContent = '';
+    lines.forEach(ws => { const l = document.createElement('span'); l.setAttribute('data-line-soft', ''); l.textContent = ws.join(' '); if (shown) l.style.cssText = 'opacity:1;transform:none;filter:none'; el.appendChild(l); });
+    const box = el.clientWidth + 1;
+    el.querySelectorAll('[data-line-soft]').forEach(l => { if (l.scrollWidth > box) l.style.whiteSpace = 'normal'; });
+  }
+
+  // rebuild every soft split when the box width changes; revealed paragraphs stay visible, unrevealed ones stay hidden and keep their trigger
+  // display lines marked data-fit take the width of their cell: font-size = cell width / text width at 100px
+  fitLines() {
+    this.qa('[data-fit]').forEach(el => {
+      const probe = document.createElement('span'); probe.textContent = el.dataset.text || el.textContent; probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:300 100px/1 var(--font-display);letter-spacing:-.04em'; document.body.appendChild(probe);
+      const w = probe.getBoundingClientRect().width; probe.remove();
+      if (w > 0) el.style.fontSize = Math.floor(el.clientWidth / w * 100 * 0.995) + 'px';
+    });
+  }
+
+  resplit() {
+    this.fitLines();
+    this.qa('[data-split="softlines"]').forEach(el => this.splitSoftLines(el));
+    if (this._trailLive) this._trailLive();
+  }
+
+  // one physical idea: a mask opening from bottom centre while the picture settles back from a zoom
+  openImage(el, delay = 0) {
+    const gsap = window.gsap;
+    gsap.to(el, { clipPath: this.OPEN, duration: 2, ease: this.E, delay });
+    gsap.to(el.querySelector('img'), { scale: 1, duration: 3, ease: this.E, delay });
+  }
+  closeImage(el, delay = 0) {
+    const gsap = window.gsap;
+    gsap.to(el, { clipPath: this.CLOSED, duration: 0.9, ease: 'expo.inOut', delay });
+    gsap.to(el.querySelector('img'), { scale: 1.12, duration: 0.9, ease: 'expo.inOut', delay });
+  }
+
+  init() {
+    const gsap = window.gsap, ST = window.ScrollTrigger, E = this.E;
+    if (!gsap || !ST) return;
+    gsap.registerPlugin(ST);
+    this.initLenis();
+    this._enterDelay = window.DaoTransition ? window.DaoTransition.install(this) : 0;
+    this.initCursorMarquee();
+    this.initHls();
+    this.initPressWall();
+    gsap.globalTimeline.timeScale(this.props.motionSpeed ?? 1);
+    this._speed = this.props.motionSpeed ?? 1;
+
+    this.qa('[data-split="lines"]').forEach(el => this.splitLines(el));
+    this.fitLines();
+    this.qa('[data-split="softlines"]').forEach(el => this.splitSoftLines(el));
+    this.qa('[data-block]').forEach((el, i) => ST.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => gsap.to(el, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.25, ease: E, delay: (i % 4) * 0.08 }) }));
+    this.qa('[data-split="none"]').forEach(el => {
+      gsap.set(el, { opacity: 0, y: 18, filter: 'blur(8px)' });
+      // elements at the very foot of the page can never cross the 88% line, so they fire as soon as they enter
+      const last = el.closest('footer') && !el.nextElementSibling;
+      ST.create({ trigger: el, start: last ? 'top bottom' : 'top 88%', once: true, onEnter: () => gsap.to(el, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.25, ease: E }) });
+    });
+    this.qa('[data-reveal-soft]').forEach(el => {
+      if (!el.querySelector('[data-line-soft]')) return;
+      ST.create({ trigger: el, start: 'top 85%', once: true,
+        onEnter: () => { el.dataset.revealed = '1'; gsap.to(el.querySelectorAll('[data-line-soft]'), { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.25, ease: E, stagger: 0.06 }); } });
+    });
+    this.qa('[data-split="chars"]').forEach(el => this.splitChars(el));
+
+    // text reveals on the vertical page
+    this.qa('[data-reveal]').forEach(el => {
+      const lines = el.querySelectorAll('[data-line-inner]');
+      if (!lines.length || el.closest('[data-track]')) return;
+      ST.create({ trigger: el, start: 'top 88%', once: true,
+        onEnter: () => gsap.to(lines, { yPercent: 0, y: 0, duration: 1.25, ease: E, stagger: 0.08, overwrite: true }) });
+    });
+
+    // image reveals on the vertical page
+    this.qa('[data-mask]').forEach(el => {
+      gsap.set(el, { clipPath: this.CLOSED });
+      gsap.set(el.querySelector('img'), { scale: 1.18 });
+      ST.create({ trigger: el, start: 'top 85%', once: true, onEnter: () => this.openImage(el) });
+    });
+
+    // in-frame parallax on the duo
+    this.qa('[data-parallax] img').forEach(img => {
+      gsap.fromTo(img, { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+
+    // the hero recedes: it holds still, scales back, drifts down and dims while the sheet slides over it
+    gsap.timeline({ scrollTrigger: { trigger: '[data-sheet]', start: 'top bottom', end: 'top top', scrub: true } })
+      .to('[data-hero]', { scale: 0.88, y: 24, ease: 'none' }, 0)
+      .to('[data-hero-dim]', { opacity: 0.6, ease: 'none' }, 0);
+
+    // the shared table holds still and settles back while the next sheet slides over it
+    gsap.timeline({ scrollTrigger: { trigger: '[data-over]', start: 'top bottom', end: 'top top', scrub: true } })
+      .to('[data-recede]', { scale: 0.86, y: 16, ease: 'none' }, 0)
+      .to('[data-recede-dim]', { opacity: 0.6, ease: 'none' }, 0);
+
+    if (this.isMobile()) {
+      // the trail runs vertically: sentences move into the flow after their frames, each frame opens with the site reveal
+      const frames = this.qa('[data-tmask]'), texts = this.qa('[data-trail-text]');
+      if (texts[0] && frames[4]) frames[4].after(texts[0]);
+      if (texts[1] && frames[7]) frames[7].after(texts[1]);
+      frames.forEach(el => { const im = el.querySelector('img'); gsap.set(im, { scale: 1.14 }); ST.create({ trigger: el, start: 'top 85%', once: true, onEnter: () => { gsap.to(el, { clipPath: this.OPEN, duration: 2, ease: E }); gsap.to(im, { scale: 1, duration: 3, ease: E }); } }); });
+      texts.forEach(el => { const lines = el.querySelectorAll('[data-line-soft]'); if (!lines.length) return; ST.create({ trigger: el, start: 'top 85%', once: true, onEnter: () => { el.dataset.revealed = '1'; gsap.to(lines, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.25, ease: E, stagger: 0.06 }); } }); });
+      ST.create({ trigger: '[data-trail]', start: 'bottom 60%', onEnter: () => this.setState({ theme: 'dark' }), onLeaveBack: () => this.setState({ theme: 'light' }) });
+    } else {
+    // the trail: one curve for every frame, 1:1 with the scroll. Distance from a line at 40% drives height, opening and zoom.
+    const trail = this.q('[data-trail]'), track = this.q('[data-track]');
+    // lift reaches 0.7 of the screen from the line; the opening runs over a full screen and never closes below 30%, so a frame at the edge is still a picture
+    const LINE = 0.4, REACH = 0.7, HOLD = 0.06, REACH_O = 1.0, FLOOR = 0.3;
+    let blend = 0; // 0 = resting layout before the lock, 1 = the live wave
+    const nodes = this.qa('[data-tmask]').map(el => ({ el, r: 0, rz: 0, seen: false, img: el.querySelector('img'), clip: gsap.quickSetter(el, 'clipPath'), tf: gsap.quickSetter(el.querySelector('img'), 'css'), side: Number(el.getAttribute('data-side')) || 1, off: Number(el.getAttribute('data-off')) || 0, y: gsap.quickSetter(el, 'y', 'px') }));
+    const ttexts = this.qa('[data-trail-text]').map(el => ({ el, get lines() { return el.querySelectorAll('[data-line-soft]'); }, state: 'idle' }));
+    const setX = gsap.quickSetter(track, 'x', 'px');
+    let x1 = 0, x2 = 0, queued = false;
+    const live = () => { if (queued) return; queued = true; requestAnimationFrame(() => { queued = false; liveNow(); }); };
+    const liveNow = () => {
+      setX(-(x1 + x2));
+      const vw = window.innerWidth, vh = window.innerHeight;
+      nodes.forEach(n => {
+        const r = n.el.getBoundingClientRect(), c = (r.left + r.width / 2) / vw, d = c - LINE, a = Math.min(1, Math.abs(d) / REACH);
+        const wave = n.side * a * a * vh * 0.1;
+        n.y(n.off * vh / 100 + wave * blend);
+        const t = Math.min(1, Math.max(0, (Math.abs(d) - HOLD) / (REACH_O - HOLD))), oLive = FLOOR + (1 - FLOOR) * (1 - t * t * (3 - 2 * t));
+        // before the lock every frame reads fully open; the opening curve takes over as the travel begins
+        // frames still approaching the line rest at their live opening, so they only ever grow toward it; the blend applies to frames at or past the line
+        const o = d > HOLD ? oLive : 1 - (1 - oLive) * blend;
+        // entrance: first time the frame is on screen it opens from its bottom centre, the same reveal as every image on the site
+        if (!n.seen) {
+          if (x1 > 2) { n.seen = true; n.r = 1; n.rz = 1; }
+          else if (r.left < vw && r.top < vh && r.bottom > 0) { n.seen = true; gsap.to(n, { r: 1, duration: 2, ease: E, onUpdate: live }); gsap.to(n, { rz: 1, duration: 3, ease: E, onUpdate: live }); }
+        }
+        const insN = (0.5 - 0.5 * o) * 100 + 0.01, rv = n.r;
+        const xl = (50 * (1 - rv)).toFixed(2), xr = (50 + 50 * rv).toFixed(2), yt = (100 - (100 - insN) * rv).toFixed(2), yb = (100 - insN * rv).toFixed(2);
+        n.clip('polygon(' + xl + '% ' + yt + '%,' + xr + '% ' + yt + '%,' + xr + '% ' + yb + '%,' + xl + '% ' + yb + '%)');
+        // in-frame parallax: the picture slides against the travel, up to 12% of frame width across the screen
+        n.tf({ scale: 1 + 0.14 * (1 - o) + 0.18 * (1 - n.rz), xPercent: (c - 0.5) * -12 });
+      });
+      // the sentences are the only thing on a clock: in when their hollow arrives, out upward before the next frames land on them
+      ttexts.forEach(t => {
+        const tr = t.el.getBoundingClientRect(), c = tr.left / vw, right = tr.right / vw;
+        if (t.state === 'idle' && c < 0.8) { t.state = 'in'; t.el.dataset.revealed = '1'; gsap.to(t.lines, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.25, ease: E, stagger: 0.06, overwrite: true }); }
+        else if (t.state === 'in' && right < 0) { t.state = 'out'; gsap.to(t.lines, { y: -18, opacity: 0, filter: 'blur(6px)', duration: 0.9, ease: E, stagger: 0.04, overwrite: true }); }
+        else if (t.state === 'out' && right > 0.04) { t.state = 'in'; gsap.to(t.lines, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1, ease: E, stagger: 0.04, overwrite: true }); }
+        else if (t.state === 'in' && c > 1) { t.state = 'idle'; gsap.to(t.lines, { y: 14, opacity: 0, filter: 'blur(6px)', duration: 0.6, ease: E, overwrite: true }); }
+      });
+    };
+    const lastN = nodes[nodes.length - 2].el;
+    const dist = () => { const x = gsap.getProperty(track, 'x') || 0; const r = lastN.getBoundingClientRect(); return Math.max(0, (r.left + r.width / 2 - x) - LINE * window.innerWidth); };
+    const pinST = ST.create({
+      trigger: trail, start: 'top top', end: () => '+=' + dist(), pin: true, pinSpacing: true, scrub: true, invalidateOnRefresh: true, refreshPriority: 10,
+      onUpdate: (st) => { x1 = st.progress * dist(); const b = Math.min(1, x1 / (window.innerWidth * 0.5)); blend = b * b * (3 - 2 * b); live(); },
+      onLeave: () => this.setState({ theme: 'dark' }), onEnterBack: () => this.setState({ theme: 'light' })
+    });
+    ST.create({ trigger: trail, start: 'top bottom', end: 'top top', onUpdate: live, onEnter: live });
+    // after the travel the curves carry on softly while the section scrolls away
+    ST.create({ trigger: () => pinST.spacer || trail, start: 'bottom bottom', end: 'bottom top', scrub: true, onUpdate: (st) => { x2 = st.progress * window.innerWidth * 0.35; live(); } });
+    this._trailLive = live;
+    ST.sort(); ST.refresh();
+    setTimeout(() => live(), 450);
+    }
+
+    this.qa('[data-chars]').forEach(el => {
+      const target = el.querySelector('[data-chars-text]'), rule = el.querySelector('.rule'), text = target.getAttribute('data-chars-text');
+      rule.style.boxSizing = 'border-box';
+      let tl = null;
+      const btn = el.querySelector('button');
+      const run = (open) => {
+        if (tl) tl.kill();
+        if (btn) btn.setAttribute('aria-expanded', String(open));
+        if (open) {
+          el.setAttribute('data-open', ''); el.classList.remove('closing');
+          target.innerHTML = ''; rule.style.height = '';
+          const startH = rule.offsetHeight;
+          // words hold the characters, so the line breaks only at spaces
+          const chars = []; text.split(' ').forEach((w, wi, arr) => { const word = document.createElement('span'); word.style.cssText = 'display:inline-block;white-space:nowrap'; Array.from(w).forEach(c => { const s = document.createElement('span'); s.className = 'ch'; s.textContent = c; word.appendChild(s); chars.push(s); }); target.appendChild(word); if (wi < arr.length - 1) target.appendChild(document.createTextNode(' ')); });
+          // measure the full height, then let the row grow with the text as the characters land
+          const fullH = rule.offsetHeight; rule.style.height = startH + 'px'; rule.style.overflow = 'hidden';
+          const grow = () => { let last = chars[0]; for (const c of chars) { if (Number(gsap.getProperty(c, 'opacity')) >= 0.5) last = c; else break; } const bt2 = rule.querySelector('button'); const pb = bt2 ? parseFloat(getComputedStyle(bt2).paddingBottom) : 32; const bottom = last.getBoundingClientRect().bottom - rule.getBoundingClientRect().top + pb; const want = Math.round(Math.max(startH, Math.min(fullH, bottom))); if (want > target_h) { target_h = want; hTo(want); } };
+          let target_h = startH; const hTo = gsap.quickTo(rule, 'height', { duration: 0.7, ease: E });
+          tl = gsap.timeline({ onComplete: () => { hTo(fullH); setTimeout(() => { rule.style.height = ''; rule.style.overflow = ''; }, 750); } });
+          tl.to(chars, { opacity: 1, filter: 'blur(0px)', duration: 1.4, ease: E, stagger: { each: 0.005 } }, 0);
+          tl.to(rule, { duration: () => chars.length * 0.005 + 1.4, ease: 'none', onUpdate: grow }, 0);
+        } else {
+          el.removeAttribute('data-open'); el.classList.remove('closing'); void el.offsetWidth; el.classList.add('closing');
+          const chars = Array.from(target.querySelectorAll('.ch'));
+          const fullH = rule.offsetHeight; rule.style.height = fullH + 'px'; rule.style.overflow = 'hidden';
+          const qOnly = () => { const q = rule.querySelector('.q'); const clone = q.cloneNode(true); const ai = clone.querySelector('.ansin'); if (ai) ai.textContent = ''; clone.style.position = 'absolute'; clone.style.visibility = 'hidden'; clone.style.width = q.offsetWidth + 'px'; rule.appendChild(clone); const bt = rule.querySelector('button'); const pad = bt ? parseFloat(getComputedStyle(bt).paddingTop) + parseFloat(getComputedStyle(bt).paddingBottom) : 64; const hgt = clone.offsetHeight + pad; clone.remove(); return hgt; };
+          tl = gsap.timeline({ onComplete: () => { target.innerHTML = ''; rule.style.height = ''; rule.style.overflow = ''; } });
+          tl.to(chars.slice().reverse(), { opacity: 0, filter: 'blur(5px)', duration: 0.4, ease: E, stagger: { each: 0.003 } }, 0);
+          tl.to(rule, { height: qOnly(), duration: 0.8, ease: E }, 0.05);
+        }
+      };
+      el._faqRun = run;
+      (btn || el).addEventListener('click', () => {
+        const open = !el.hasAttribute('data-open');
+        if (open) el.parentElement.querySelectorAll('[data-chars][data-open]').forEach(o => { if (o !== el && o._faqRun) o._faqRun(false); });
+        run(open);
+      });
+    });
+
+    // nav tone over the hero
+    ST.create({ trigger: '[data-sheet]', start: 'top 80px', onEnter: () => this.setState({ overHero: false }), onLeaveBack: () => this.setState({ overHero: true }) });
+
+    // menu panel starting state
+    gsap.set('[data-menu-panel]', { yPercent: 102, visibility: 'visible' });
+    gsap.set('[data-menu-mask]', { clipPath: this.CLOSED });
+    gsap.set('[data-menu-mask] img', { scale: 1.18 });
+    gsap.set('[data-menu-label], [data-menu-contact]', { opacity: 0, y: 16 });
+
+    // intro
+    const mode = this.props.introLoader ?? 'every load';
+    const seen = sessionStorage.getItem('dao-intro-seen');
+    if (this._enterDelay || mode === 'off' || (mode === 'once per session' && seen)) this.skipIntro(); else this.playIntro();
+    sessionStorage.setItem('dao-intro-seen', '1');
+
+    this._wasMobile = this.isMobile();
+    let rs; window.addEventListener('resize', () => { clearTimeout(rs); rs = setTimeout(() => { if (this.isMobile() !== this._wasMobile) return location.reload(); this.resplit(); ST.refresh(); }, 200); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { this.resplit(); ST.refresh(); });
+    setTimeout(() => this.resplit(), 900);
+    setTimeout(() => ST.refresh(), 400);
+  }
+
+  // hero content: every element starts on the tail of the one before
+  heroIn(tl, at, withMask = true) {
+    const E = this.E;
+    const lines = this.qa('[data-hero-line]');
+    if (withMask) {
+      tl.to('[data-hero-mask]', { clipPath: this.OPEN, duration: 2, ease: E }, at);
+      tl.to('[data-hero-img]', { scale: 1, duration: 3, ease: E }, at);
+    }
+    tl.to(lines[0], { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.25, ease: E }, at);
+    tl.to(lines[1], { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.25, ease: E }, at + 0.2);
+    // the reserve button mounts async inside the tooltip; resolve its targets at fire time
+    tl.add(() => window.gsap.to('[data-hero-reserve-label]', { opacity: 1, y: 0, duration: 1.1, ease: E }), at + 0.6);
+    tl.add(() => window.gsap.to('[data-hero-reserve-rule]', { scaleX: 1, duration: 1.25, ease: E }), at + 0.75);
+    tl.to('[data-nav]', { opacity: 1, duration: 1, ease: E }, at + 0.3);
+    tl.to('[data-hero-corner]', { opacity: 1, duration: 1, ease: E }, at + 1.1);
+  }
+
+  skipIntro() {
+    const gsap = window.gsap;
+    gsap.set('[data-loader]', { display: 'none' });
+    gsap.set('[data-loader-logo]', { display: 'none' });
+    gsap.set('[data-nav-mark]', { opacity: 1 });
+    const tl = gsap.timeline({ delay: this._enterDelay || 0 });
+    this.heroIn(tl, 0.1);
+  }
+
+  playIntro() {
+    const gsap = window.gsap, E = this.E;
+    const tag = this.qa('[data-loader-tag] [data-char]');
+    const logo = this.q('[data-loader-logo]'), mark = this.q('[data-nav-mark]');
+    // the hero exists behind the sheet the whole time: image already open
+    gsap.set('[data-hero-mask]', { clipPath: this.OPEN });
+    gsap.set('[data-hero-img]', { scale: 1.06 });
+    const tl = gsap.timeline();
+    // 1, 2: the logo is there from the first frame; the line arrives letter by letter
+    const lettersDone = 0.3 + 1.25 + tag.length * 0.02;
+    tl.to(tag, { yPercent: 0, y: 0, duration: 1.25, ease: E, stagger: 0.02 }, 0.3);
+    // 3, 4: the moment the line reads complete the sheet drops, and the logo detaches in the same beat
+    // one motion: sheet and logo share duration and curve, gentle release, fast middle, long soft landing
+    const drop = lettersDone - 0.45, flight = 1.3, SHEET = 'expo.inOut';
+    tl.to('[data-loader]', { yPercent: 100, duration: flight, ease: SHEET }, drop);
+    tl.set('[data-loader]', { display: 'none' }, drop + flight + 0.05);
+    tl.add(() => {
+      const a = logo.getBoundingClientRect(), b = mark.getBoundingClientRect();
+      gsap.to(logo, { x: (b.left + b.width / 2) - (a.left + a.width / 2), y: (b.top + b.height / 2) - (a.top + a.height / 2), scale: b.width / a.width, duration: flight, ease: SHEET, transformOrigin: '50% 50%' });
+    }, drop);
+    // 5: the picture settles as it is uncovered
+    tl.to('[data-hero-img]', { scale: 1, duration: 3, ease: E }, drop);
+    // 6: the headline starts before the logo lands
+    this.heroIn(tl, drop + flight * 0.6, false);
+    tl.set('[data-nav-mark]', { opacity: 1 }, drop + flight - 0.03);
+    tl.set(logo, { display: 'none' }, drop + flight - 0.02);
+  }
+
+  // hero stream: hls.js where MSE exists, native HLS on Safari; the poster stays if the stream is unreachable
+  initHls() {
+    const v = this.q('[data-hls]');
+    if (!v || this._hls) return;
+    // in a bundled page hls.js can land after mount; wait for it (up to ~8s) before deciding on a path
+    if (!window.Hls && !v.canPlayType('application/vnd.apple.mpegurl') && (this._hlsWait = (this._hlsWait || 0) + 1) < 160) return setTimeout(() => this.initHls(), 50);
+    const src = v.getAttribute('data-hls');
+    v.muted = true; v.loop = true; v.playsInline = true;
+    const play = () => v.play().catch(() => {});
+    v.addEventListener('ended', () => { v.currentTime = 0; play(); });
+    // Bunny's MP4 fallback rendition, for hosts whose CSP blocks hls.js fetches; plain <video src> is not subject to connect-src
+    // local 720p copy for hosts whose CSP blocks external media
+    const local = v.getAttribute('src');
+    const mp4 = () => { if (v.getAttribute('src') !== local || !v.currentSrc) v.src = local; play(); };
+    play();
+    const native = v.canPlayType('application/vnd.apple.mpegurl');
+    if (window.Hls && window.Hls.isSupported() && !(native && 'ManagedMediaSource' in window)) {
+      const hls = new window.Hls({ maxBufferLength: 10, capLevelToPlayerSize: true, startLevel: -1 });
+      this._hls = hls;
+      hls.on(window.Hls.Events.MEDIA_ATTACHED, () => hls.loadSource(src));
+      hls.on(window.Hls.Events.MANIFEST_PARSED, play);
+      hls.on(window.Hls.Events.ERROR, (_, d) => { if (d.fatal) { hls.destroy(); this._hls = false; mp4(); } });
+      hls.attachMedia(v);
+    } else if (native) { this._hls = true; v.src = src; v.addEventListener('loadedmetadata', play, { once: true }); }
+    else { this._hls = false; mp4(); }
+  }
+
+  // press wall: three marks visible, five in rotation, one swap every loop, never the same slot twice in a row
+  initPressWall() {
+    const gsap = window.gsap, ST = window.ScrollTrigger;
+    const root = this.q('[data-press-wall]'); if (!root) return;
+    const slots = this.qa('[data-press-slot]'), tpl = root.querySelector('[data-press-pool]');
+    let pool = Array.from(tpl.querySelectorAll('[data-press-logo]')); pool.forEach(n => n.remove());
+    slots.forEach(s => gsap.set(s.querySelector('[data-press-logo]'), { xPercent: -50, yPercent: -50 }));
+    let last = -1;
+    const swap = () => {
+      if (!pool.length) return;
+      let i; do { i = Math.floor(Math.random() * slots.length); } while (i === last); last = i;
+      const slot = slots[i], cur = slot.querySelector('[data-press-logo]'), next = pool.shift();
+      gsap.set(next, { xPercent: -50, yPercent: 10, autoAlpha: 0, filter: 'blur(4px)' });
+      slot.appendChild(next);
+      if (cur) gsap.to(cur, { xPercent: -50, yPercent: -110, autoAlpha: 0, filter: 'blur(4px)', duration: 1.1, ease: 'expo.inOut', onComplete: () => { cur.remove(); gsap.set(cur, { clearProps: 'transform,opacity,visibility,filter' }); pool.push(cur); } });
+      gsap.to(next, { xPercent: -50, yPercent: -50, autoAlpha: 1, filter: 'blur(0px)', duration: 1.1, ease: 'expo.inOut', delay: 0.1 });
+    };
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.8, paused: true }); tl.call(swap);
+    ST.create({ trigger: root, start: 'top bottom', end: 'bottom top', onEnter: () => tl.play(), onLeave: () => tl.pause(), onEnterBack: () => tl.play(), onLeaveBack: () => tl.pause() });
+    document.addEventListener('visibilitychange', () => document.hidden ? tl.pause() : tl.play());
+  }
+
+  initLenis() {
+    if (!window.Lenis || this._lenis || this.isMobile()) return;
+    const gsap = window.gsap, ST = window.ScrollTrigger;
+    this._lenis = new window.Lenis({ duration: 1.2, wheelMultiplier: 0.9, smoothWheel: true });
+    this._lenis.on('scroll', ST.update);
+    gsap.ticker.add((t) => this._lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // cursor marquee: the next available date follows the pointer over any reserve trigger
+  initCursorMarquee() {
+    const gsap = window.gsap;
+    const cursor = this.q('[data-cursor-marquee-status]');
+    if (!cursor || this._cm || window.matchMedia('(pointer: coarse)').matches) return;
+    this._cm = true;
+    const targets = cursor.querySelectorAll('[data-cursor-marquee-text-target]');
+    const xTo = gsap.quickTo(cursor, 'x', { duration: 0.4, ease: 'power3' });
+    const yTo = gsap.quickTo(cursor, 'y', { duration: 0.4, ease: 'power3' });
+    let pauseTimeout = null, activeEl = null, lastX = 0, lastY = 0;
+    // snap the cursor onto the pointer before opening so the pill never appears mid-flight
+    const xSet = gsap.quickSetter(cursor, 'x', 'px'), ySet = gsap.quickSetter(cursor, 'y', 'px');
+    // the pointer tip sits at the pill's top-left corner
+    gsap.set(cursor, { xPercent: 0, yPercent: 0 });
+    gsap.set(cursor.querySelector('.cm-card'), { x: 10, y: 10 });
+    const playFor = (el) => {
+      if (pauseTimeout) clearTimeout(pauseTimeout);
+      const text = el.getAttribute('data-cursor-marquee-text') || '';
+      const sec = (text.length || 1) / 5;
+      targets.forEach(t => { t.textContent = text; t.style.animationPlayState = 'running'; t.style.animationDuration = sec + 's'; });
+      xSet(lastX); ySet(lastY);
+      requestAnimationFrame(() => cursor.setAttribute('data-cursor-marquee-status', 'active'));
+      activeEl = el;
+    };
+    const pauseLater = () => {
+      cursor.setAttribute('data-cursor-marquee-status', 'not-active');
+      if (pauseTimeout) clearTimeout(pauseTimeout);
+      pauseTimeout = setTimeout(() => targets.forEach(t => { t.style.animationPlayState = 'paused'; }), 900);
+      activeEl = null;
+    };
+    const checkTarget = () => {
+      const el = document.elementFromPoint(lastX, lastY);
+      const hit = el && el.closest('[data-cursor-marquee-text]');
+      if (hit !== activeEl) { if (activeEl) pauseLater(); if (hit) playFor(hit); }
+    };
+    window.addEventListener('pointermove', e => { lastX = e.clientX; lastY = e.clientY; xTo(lastX); yTo(lastY); checkTarget(); }, { passive: true });
+    window.addEventListener('scroll', () => { xTo(lastX); yTo(lastY); checkTarget(); }, { passive: true });
+    if (this._lenis) this._lenis.on('scroll', checkTarget);
+    cursor.setAttribute('data-cursor-marquee-status', 'not-active');
+  }
+
+  menuTargets() { return ['[data-menu-panel]', '[data-menu-scrim]', '[data-menu-mask]', '[data-menu-mask] img', '[data-menu-label]', '[data-menu-contact]']; }
+
+  // open, about 2.6s: flat sheet slides up on in-out, content starts when the sheet is halfway
+  openMenu() {
+    const gsap = window.gsap, E = this.E, SHEET = 'expo.inOut';
+    this.swapMenuWord(true);
+    if (this._lenis) this._lenis.stop(); else document.body.style.overflow = 'hidden';
+    if (this._menuTl) this._menuTl.kill();
+    gsap.killTweensOf(this.menuTargets());
+    const masks = this.qa('[data-menu-mask]'), labels = this.qa('[data-menu-label]');
+    gsap.set(masks, { clipPath: this.CLOSED });
+    gsap.set('[data-menu-mask] img', { scale: 1.18 });
+    gsap.set(labels, { opacity: 0, y: 14, filter: 'blur(6px)' });
+    gsap.set('[data-menu-contact]', { opacity: 0, y: 10 });
+    const slide = 1.2;
+    const tl = this._menuTl = gsap.timeline();
+    tl.to('[data-menu-panel]', { yPercent: 0, duration: slide, ease: SHEET }, 0);
+    tl.to('[data-menu-scrim]', { opacity: 0.55, duration: slide, ease: SHEET }, 0);
+    masks.forEach((el, i) => {
+      const at = slide * 0.5 + i * 0.09;
+      tl.to(el, { clipPath: this.OPEN, duration: 1.5, ease: E }, at);
+      tl.to(el.querySelector('img'), { scale: 1, duration: 2.2, ease: E }, at);
+      tl.to(labels[i], { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: E }, at + 0.35);
+    });
+    tl.to('[data-menu-contact]', { opacity: 1, y: 0, duration: 1.1, ease: E }, slide * 0.5 + 0.9);
+  }
+
+  // close, about 1.5s: text lifts first, masks close downward column by column, the sheet leaves before they finish
+  closeMenu() {
+    const gsap = window.gsap, E = this.E, SHEET = 'expo.inOut';
+    this.swapMenuWord(false);
+    if (this._lenis) this._lenis.start(); else document.body.style.overflow = '';
+    if (this._menuTl) this._menuTl.kill();
+    gsap.killTweensOf(this.menuTargets());
+    const masks = this.qa('[data-menu-mask]'), labels = this.qa('[data-menu-label]');
+    const tl = this._menuTl = gsap.timeline();
+    tl.to('[data-menu-contact]', { opacity: 0, y: 10, duration: 1, ease: E }, 0.15);
+    tl.to(labels, { opacity: 0, y: -10, filter: 'blur(4px)', duration: 1.1, ease: E, stagger: 0.05 }, 0.1);
+    masks.forEach((el, i) => {
+      // masks are cut by the sheet at roughly half their travel: an even close, never seen finishing
+      const at = 0.1 + i * 0.06;
+      tl.to(el, { clipPath: this.CLOSED, duration: 1.5, ease: 'power1.inOut' }, at);
+      tl.to(el.querySelector('img'), { scale: 1.08, duration: 1.5, ease: 'power1.inOut' }, at);
+    });
+    // the cut: the sheet drops while the images are mid-close
+    tl.to('[data-menu-panel]', { yPercent: 102, duration: 0.9, ease: SHEET }, 0.55);
+    tl.to('[data-menu-scrim]', { opacity: 0, duration: 0.9, ease: SHEET }, 0.55);
+  }
+}
+</script>
+</body>
+</html>
